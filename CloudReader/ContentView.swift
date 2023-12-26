@@ -1,88 +1,76 @@
-//
-//  ContentView.swift
-//  CloudReader
-//
-//  Created by Rachit Shah on 12/24/23.
-//
-
 import SwiftUI
-import CoreData
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
+    @StateObject var viewModel = DocumentListViewModel()
+    #if os(iOS)
+    @State private var showingActionSheet = false
+    @State private var showingDocumentPicker = false
+    #endif
 
     var body: some View {
         NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                    } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
-                    }
-                }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-#if os(iOS)
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-#endif
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-            Text("Select an item")
+            DocumentListView(viewModel: viewModel)
+                .frame(minWidth: 200)
+                .navigationTitle("Documents")
+                // Platform-specific UI
+                #if os(iOS)
+                .navigationBarItems(trailing: addButtoniOS)
+                #elseif os(macOS)
+                .toolbar { addButtonmacOS }
+                #endif
         }
     }
 
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+    #if os(iOS)
+    private var addButtoniOS: some View {
+        Button(action: {
+            showingActionSheet = true
+        }) {
+            Image(systemName: "plus")
+        }
+        .actionSheet(isPresented: $showingActionSheet) {
+            ActionSheet(title: Text("Add Document"), message: Text("Choose an option"), buttons: [
+                .default(Text("Upload a Document")) {
+                    showingDocumentPicker = true
+                },
+                .default(Text("Link a Webpage")) {
+                    // Implement webpage linking functionality
+                },
+                .cancel()
+            ])
+        }
+        .sheet(isPresented: $showingDocumentPicker) {
+            DocumentPicker(allowedContentTypes: [.plainText, .pdf, .epub]) { url in
+                // Handle the picked document URL
+                viewModel.processDocument(at: url)
             }
         }
     }
+    #endif
 
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+    #if os(macOS)
+    private var addButtonmacOS: some View {
+        MenuButton(label: Image(systemName: "plus")) {
+            Button("Upload a Document") {
+                viewModel.uploadDocument()
+            }
+            Button("Link a Webpage") {
+                // Implement webpage linking functionality
             }
         }
     }
+    #endif
+    
+    #if os(iOS)
+    func uploadDocument() {
+        showingDocumentPicker = true
+    }
+    #endif
 }
 
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
-
-#Preview {
-    ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+            .environmentObject(DocumentListViewModel())
+    }
 }

@@ -64,6 +64,7 @@
 		607284062B3AE68A002B5DAF /* MicrosoftAzureSynthesizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MicrosoftAzureSynthesizer.swift; sourceTree = "<group>"; };
 		607284072B3AE68A002B5DAF /* AmazonPollySynthesizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonPollySynthesizer.swift; sourceTree = "<group>"; };
 		60DFF5E32B3EB44C004E098C /* AmazonPollyCFN.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = AmazonPollyCFN.yaml; sourceTree = "<group>"; };
+		60DFF5E52B3EB5F7004E098C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +117,7 @@
 				607283D22B3875D9002B5DAF /* CloudReader.entitlements */,
 				607283CB2B3875D7002B5DAF /* CloudReader.xcdatamodeld */,
 				607283D32B3875D9002B5DAF /* Preview Content */,
+				60DFF5E52B3EB5F7004E098C /* README.md */,
 			);
 			path = CloudReader;
 			sourceTree = "<group>";

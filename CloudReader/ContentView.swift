@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var viewModel = DocumentListViewModel()
+    @State private var showingSettings = false
     #if os(iOS)
     @State private var showingActionSheet = false
     @State private var showingDocumentPicker = false
@@ -14,10 +15,25 @@ struct ContentView: View {
                 .navigationTitle("Documents")
                 // Platform-specific UI
                 #if os(iOS)
-                .navigationBarItems(trailing: addButtoniOS)
+                .navigationBarItems(trailing: HStack {
+                    settingsButton
+                    addButtoniOS
+                })
                 #elseif os(macOS)
-                .toolbar { addButtonmacOS }
+                .toolbar { ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    settingsButton
+                    addButtonmacOS
+                } }
                 #endif
+                .sheet(isPresented: $showingSettings) {
+                    SettingsView()
+                }
+        }
+    }
+    
+    private var settingsButton: some View {
+        Button("Settings") {
+            showingSettings = true
         }
     }
 

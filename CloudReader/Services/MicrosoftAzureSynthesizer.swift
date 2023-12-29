@@ -32,6 +32,7 @@ class MicrosoftAzureSynthesizer: NSObject, SpeechSynthesizerProtocol, AVSpeechSy
         let utterance = AVSpeechUtterance(string: text)
         utterance.voice = AVSpeechSynthesisVoice(identifier: selectedVoiceIdentifier)
         synthesizer.speak(utterance)
+        MicrosoftAzureSynthesizer.saveCharactersProcessed(count: text.count, engine: selectedEngine)
     }
 
     func stopSpeaking() {
@@ -57,5 +58,16 @@ class MicrosoftAzureSynthesizer: NSObject, SpeechSynthesizerProtocol, AVSpeechSy
     
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         delegate?.didFinishSpeaking()
+    }
+    
+    static func saveCharactersProcessed(count: Int, engine: String) {
+        var charactersProcessed = getCharactersProcessed()
+        let charactersProcessedForEngine = charactersProcessed[engine, default: 0]
+        charactersProcessed[engine] = charactersProcessedForEngine + count
+        UserDefaults.standard.set(charactersProcessed, forKey: "azureCharactersProcessed")
+    }
+
+    static func getCharactersProcessed() -> [String:Int] {
+        return UserDefaults.standard.dictionary(forKey: "azureCharactersProcessed") as? [String: Int] ?? [String: Int]()
     }
 }

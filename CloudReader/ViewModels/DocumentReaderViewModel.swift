@@ -4,12 +4,13 @@ import NaturalLanguage
 
 @MainActor
 class DocumentReaderViewModel: ObservableObject, SpeechSynthesizerDelegate {
-    enum TTSService {
+    enum TTSService: String {
         case local, amazonPolly, googleCloud, microsoftAzure
     }
 
     @Published var currentSentenceIndex = 0
     @Published var isSpeaking = false
+    @Published var errorMessage: String?
     
     @Published var selectedLanguage: String = "en-US" {
         didSet {
@@ -56,6 +57,7 @@ class DocumentReaderViewModel: ObservableObject, SpeechSynthesizerDelegate {
         self.sentences = DocumentReaderViewModel.splitIntoSentences(text: document.content)
         self.speechSynthesizer = LocalSpeechSynthesizer(sentences: self.sentences, delegate: nil)
         self.speechSynthesizer = LocalSpeechSynthesizer(sentences: self.sentences, delegate: self)
+        loadTTSSettings()
         try await updateSelectedSynthesizer()
     }
 
@@ -123,6 +125,7 @@ class DocumentReaderViewModel: ObservableObject, SpeechSynthesizerDelegate {
         selectedVoice = speechSynthesizer.selectedVoiceIdentifier
         speechSynthesizer.setLanguage(language: selectedLanguage)
         speechSynthesizer.setVoice(voice: selectedVoice)
+        saveTTSSettings()
     }
     
     private func updateVoicesForSelectedLanguage() async {
@@ -131,10 +134,12 @@ class DocumentReaderViewModel: ObservableObject, SpeechSynthesizerDelegate {
         availableVoices = await speechSynthesizer.supportedVoices()
         selectedVoice = availableVoices.first ?? "Default"
         speechSynthesizer.setVoice(voice: selectedVoice)
+        saveTTSSettings()
     }
 
     private func updateSynthesizerVoice() {
         speechSynthesizer.setVoice(voice: selectedVoice)
+        saveTTSSettings()
     }
 
     static func splitIntoSentences(text: String) -> [String] {
@@ -181,6 +186,30 @@ class DocumentReaderViewModel: ObservableObject, SpeechSynthesizerDelegate {
             print("Finished speaking \(self.currentSentenceIndex)")
             self.currentSentenceIndex += 1
         }
+    }
+    
+    nonisolated func didEncounterError(_ error: SynthesizerError) {
+        // Handle different error cases
+        DispatchQueue.main.async {
+            self.errorMessage = error.errorDescription
+        }
+    }
+    
+    func saveTTSSettings() {
+        UserDefaults.standard.set(selectedTTSService.rawValue, forKey: "selectedTTSService")
+        UserDefaults.standard.set(selectedEngine, forKey: "selectedEngine")
+        UserDefaults.standard.set(selectedLanguage, forKey: "selectedLanguage")
+        UserDefaults.standard.set(selectedVoice, forKey: "selectedVoice")
+    }
+
+    func loadTTSSettings() {
+        if let serviceRawValue = UserDefaults.standard.string(forKey: "selectedTTSService"),
+           let service = TTSService(rawValue: serviceRawValue) {
+            selectedTTSService = service
+        }
+        selectedEngine = UserDefaults.standard.string(forKey: "selectedEngine") ?? "standard"
+        selectedLanguage = UserDefaults.standard.string(forKey: "selectedLanguage") ?? "en-US"
+        selectedVoice = UserDefaults.standard.string(forKey: "selectedVoice") ?? "Joanna"
     }
 }
 

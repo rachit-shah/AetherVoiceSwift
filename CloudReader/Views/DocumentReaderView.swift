@@ -107,6 +107,11 @@ struct DocumentReaderView: View {
         .onDisappear {
             viewModel.stopReadingText()
         }
+        .alert("Error", isPresented: Binding<Bool>.constant(viewModel.errorMessage != nil), actions: {
+            Button("OK", role: .cancel) { }
+        }, message: {
+            Text(viewModel.errorMessage ?? "")
+        })
     }
 
     @ViewBuilder

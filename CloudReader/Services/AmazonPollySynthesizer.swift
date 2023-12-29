@@ -24,8 +24,15 @@ class AmazonPollySynthesizer: NSObject, SpeechSynthesizerProtocol, AVAudioPlayer
         self.delegate = delegate
         // Cognito pool ID. Pool needs to be unauthenticated pool with
         // Amazon Polly permissions.
-        self.cognitoIdentityId = ProcessInfo.processInfo.environment["COGNITO_IDENTITY_POOL_ID"] ?? ""
-        self.AwsRegion = cognitoIdentityId.components(separatedBy: ":")[0]
+        if let idData = KeychainWrapper.load(key: "COGNITO_IDENTITY_POOL_ID"),
+           let idString = String(data: idData, encoding: .utf8) {
+            self.cognitoIdentityId = idString
+            self.AwsRegion = cognitoIdentityId.components(separatedBy: ":")[0]
+        } else {
+            self.cognitoIdentityId = "Not Set"
+            self.AwsRegion = "Not Set"
+            delegate?.didEncounterError(.userError("Need to set Identity pool id in the AWS configuration to use Polly synthesizer. Change to a different synthesizer in reader settings or set the appropriate config in the Settings menu."))
+        }
         self.cognitoClient = try CognitoIdentityClient(region: self.AwsRegion)
         self.pollyClient = try PollyClient(region: AwsRegion)
         // Create an audio player
@@ -76,6 +83,7 @@ class AmazonPollySynthesizer: NSObject, SpeechSynthesizerProtocol, AVAudioPlayer
             self.audioPlayer = try AVAudioPlayer(data: speech)
             self.audioPlayer.delegate = self
             self.audioPlayer.play()
+            AmazonPollySynthesizer.saveCharactersProcessed(count: text.count, engine: selectedEngine)
         } catch {
             print("Failed to speak using Amazon Polly: \(error)")
         }
@@ -95,7 +103,7 @@ class AmazonPollySynthesizer: NSObject, SpeechSynthesizerProtocol, AVAudioPlayer
     func supportedLanguages() async -> [String] {
         await refreshCredentials()
         do {
-            let allVoices = try await self.pollyClient.describeVoices(input: DescribeVoicesInput()).voices ?? []
+            let allVoices = try await self.pollyClient.describeVoices(input: DescribeVoicesInput(engine: PollyClientTypes.Engine(rawValue: selectedEngine))).voices ?? []
             let allLanguages = allVoices.map { $0.languageCode?.rawValue ?? "en-US" }
             let uniqueLanguages = Array(Set(allLanguages))
             return Array(uniqueLanguages).sorted()  // Convert back to sorted array
@@ -131,5 +139,16 @@ class AmazonPollySynthesizer: NSObject, SpeechSynthesizerProtocol, AVAudioPlayer
     // AVAudioPlayerDelegate method
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         delegate?.didFinishSpeaking()
+    }
+    
+    static func saveCharactersProcessed(count: Int, engine: String) {
+        var charactersProcessed = getCharactersProcessed()
+        let charactersProcessedForEngine = charactersProcessed[engine, default: 0]
+        charactersProcessed[engine] = charactersProcessedForEngine + count
+        UserDefaults.standard.set(charactersProcessed, forKey: "amazonPollyCharactersProcessed")
+    }
+
+    static func getCharactersProcessed() -> [String:Int] {
+        return UserDefaults.standard.dictionary(forKey: "amazonPollyCharactersProcessed") as? [String: Int] ?? [String: Int]()
     }
 }

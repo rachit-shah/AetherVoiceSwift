@@ -35,6 +35,8 @@
 		607284092B3AE68A002B5DAF /* MicrosoftAzureSynthesizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607284062B3AE68A002B5DAF /* MicrosoftAzureSynthesizer.swift */; };
 		6072840A2B3AE68A002B5DAF /* AmazonPollySynthesizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607284072B3AE68A002B5DAF /* AmazonPollySynthesizer.swift */; };
 		60DFF5E42B3EB44C004E098C /* AmazonPollyCFN.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 60DFF5E32B3EB44C004E098C /* AmazonPollyCFN.yaml */; };
+		60DFF5E72B3EECB7004E098C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DFF5E62B3EECB7004E098C /* SettingsView.swift */; };
+		60DFF5E92B3EF375004E098C /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DFF5E82B3EF375004E098C /* KeychainWrapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +67,8 @@
 		607284072B3AE68A002B5DAF /* AmazonPollySynthesizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonPollySynthesizer.swift; sourceTree = "<group>"; };
 		60DFF5E32B3EB44C004E098C /* AmazonPollyCFN.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = AmazonPollyCFN.yaml; sourceTree = "<group>"; };
 		60DFF5E52B3EB5F7004E098C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		60DFF5E62B3EECB7004E098C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		60DFF5E82B3EF375004E098C /* KeychainWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +158,7 @@
 				607283EE2B39BEDE002B5DAF /* DocumentReaderView.swift */,
 				607283F02B39BEE7002B5DAF /* DocumentUploadView.swift */,
 				607283FF2B3A1099002B5DAF /* DocumentPickerView.swift */,
+				60DFF5E62B3EECB7004E098C /* SettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -193,6 +198,7 @@
 			children = (
 				607283FD2B3A0CFD002B5DAF /* FilePickerUtility.swift */,
 				604A91472B3CB36200836DAF /* RuntimeError.swift */,
+				60DFF5E82B3EF375004E098C /* KeychainWrapper.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -288,8 +294,10 @@
 				607283EF2B39BEDE002B5DAF /* DocumentReaderView.swift in Sources */,
 				6072840A2B3AE68A002B5DAF /* AmazonPollySynthesizer.swift in Sources */,
 				607283C82B3875D7002B5DAF /* CloudReaderApp.swift in Sources */,
+				60DFF5E92B3EF375004E098C /* KeychainWrapper.swift in Sources */,
 				607283CA2B3875D7002B5DAF /* Persistence.swift in Sources */,
 				604A91482B3CB36200836DAF /* RuntimeError.swift in Sources */,
+				60DFF5E72B3EECB7004E098C /* SettingsView.swift in Sources */,
 				607283F52B39BF05002B5DAF /* DocumentReaderViewModel.swift in Sources */,
 				607283EB2B39BEB2002B5DAF /* AppDocument.swift in Sources */,
 				607283FE2B3A0CFD002B5DAF /* FilePickerUtility.swift in Sources */,

@@ -33,6 +33,7 @@ class LocalSpeechSynthesizer: NSObject, SpeechSynthesizerProtocol, AVSpeechSynth
         utterance.voice = AVSpeechSynthesisVoice(identifier: selectedVoiceIdentifier)
         synthesizer.speak(utterance)
         print("Speaking text Local: \(text).")
+        LocalSpeechSynthesizer.saveCharactersProcessed(count: text.count, engine: selectedEngine)
     }
 
     func stopSpeaking() {
@@ -58,5 +59,16 @@ class LocalSpeechSynthesizer: NSObject, SpeechSynthesizerProtocol, AVSpeechSynth
     
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         delegate?.didFinishSpeaking()
+    }
+    
+    static func saveCharactersProcessed(count: Int, engine: String) {
+        var charactersProcessed = getCharactersProcessed()
+        let charactersProcessedForEngine = charactersProcessed[engine, default: 0]
+        charactersProcessed[engine] = charactersProcessedForEngine + count
+        UserDefaults.standard.set(charactersProcessed, forKey: "localCharactersProcessed")
+    }
+
+    static func getCharactersProcessed() -> [String:Int] {
+        return UserDefaults.standard.dictionary(forKey: "localCharactersProcessed") as? [String: Int] ?? [String: Int]()
     }
 }

@@ -32,6 +32,7 @@ class GoogleCloudSynthesizer: NSObject, SpeechSynthesizerProtocol, AVSpeechSynth
         let utterance = AVSpeechUtterance(string: text)
         utterance.voice = AVSpeechSynthesisVoice(identifier: selectedVoiceIdentifier)
         synthesizer.speak(utterance)
+        GoogleCloudSynthesizer.saveCharactersProcessed(count: text.count, engine: selectedEngine)
     }
 
     func stopSpeaking() {
@@ -57,5 +58,16 @@ class GoogleCloudSynthesizer: NSObject, SpeechSynthesizerProtocol, AVSpeechSynth
     
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         delegate?.didFinishSpeaking()
+    }
+    
+    static func saveCharactersProcessed(count: Int, engine: String) {
+        var charactersProcessed = getCharactersProcessed()
+        let charactersProcessedForEngine = charactersProcessed[engine, default: 0]
+        charactersProcessed[engine] = charactersProcessedForEngine + count
+        UserDefaults.standard.set(charactersProcessed, forKey: "googleCloudCharactersProcessed")
+    }
+
+    static func getCharactersProcessed() -> [String:Int] {
+        return UserDefaults.standard.dictionary(forKey: "googleCloudCharactersProcessed") as? [String: Int] ?? [String: Int]()
     }
 }

@@ -5,7 +5,7 @@ struct DocumentListView: View {
 
     var body: some View {
         List(viewModel.documents) { document in
-            NavigationLink(destination: DocumentReaderView(viewModel: DocumentReaderViewModel(document: document))) {
+            NavigationLink(destination: IntermediateReaderView(document: document)) {
                 Text(document.title)
             }
         }
@@ -13,18 +13,22 @@ struct DocumentListView: View {
         .onAppear {
             viewModel.fetchDocuments()
         }
-        // Add additional modifiers or platform-specific code if needed
     }
 }
 
-struct DocumentRow: View {
+// Intermediate view to handle async initialization
+struct IntermediateReaderView: View {
     var document: AppDocument
+    @State private var viewModel: DocumentReaderViewModel?
 
     var body: some View {
-        HStack {
-            Text(document.title)
-            Spacer()
-            // Additional information or icons can be added here
+        if let viewModel = viewModel {
+            DocumentReaderView(viewModel: viewModel)
+        } else {
+            Text("Loading...")
+                .task {
+                    viewModel = try? await DocumentReaderViewModel(document: document)
+                }
         }
     }
 }

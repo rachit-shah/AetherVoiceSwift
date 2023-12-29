@@ -1,8 +1,11 @@
 import SwiftUI
 
+
+
 struct DocumentReaderView: View {
     @ObservedObject var viewModel: DocumentReaderViewModel
     @State private var showingSettings = false
+    @State private var startAtMiddle = false
 
     var body: some View {
         VStack {
@@ -13,8 +16,39 @@ struct DocumentReaderView: View {
                             .foregroundColor(index == viewModel.currentSentenceIndex ? .blue : .gray)
                             .padding(.bottom, 3)
                             .onTapGesture {
-                                viewModel.startReading(from: index)
+                                DispatchQueue.main.async {
+                                    startAtMiddle = true
+                                    viewModel.currentSentenceIndex = index
+                                    viewModel.isSpeaking = true
+                                }
                             }
+                    }
+                    .onChange(of: viewModel.currentSentenceIndex) { oldValue, newValue in
+                        print("Finished reading \(oldValue), now reading \(newValue)")
+                        if newValue >= viewModel.sentences.count {
+                            DispatchQueue.main.async {
+                                viewModel.currentSentenceIndex = 0
+                                viewModel.isSpeaking = false
+                            }
+                        }
+                        if viewModel.isSpeaking {
+                            Task {
+                                await viewModel.startReading()
+                            }
+                            if startAtMiddle == true {
+                                startAtMiddle = false
+                            }
+                        }
+                    }
+                    .onChange(of: viewModel.isSpeaking) { oldValue, newValue in
+                        print("Value was \(oldValue), now \(newValue)")
+                        if newValue == true && oldValue == false && startAtMiddle == false {
+                            Task {
+                                await viewModel.startReading()
+                            }
+                        } else if newValue == false && oldValue == true {
+                            viewModel.stopReadingText()
+                        }
                     }
                 }
                 .padding()
@@ -23,7 +57,7 @@ struct DocumentReaderView: View {
             HStack {
                 Spacer()
 
-                Button(action: viewModel.moveToPreviousSentence) {
+                Button(action: {viewModel.moveToPreviousSentence()}) {
                     Image(systemName: "arrow.left")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -32,7 +66,7 @@ struct DocumentReaderView: View {
                 .buttonStyle(PlainButtonStyle())
                 .padding()
 
-                Button(action: viewModel.toggleSpeech) {
+                Button(action: {viewModel.toggleSpeech()}) {
                     Image(systemName: viewModel.isSpeaking ? "pause.fill" : "play.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -41,7 +75,7 @@ struct DocumentReaderView: View {
                 .buttonStyle(PlainButtonStyle())
                 .padding()
 
-                Button(action: viewModel.moveToNextSentence) {
+                Button(action: {viewModel.moveToNextSentence()}) {
                     Image(systemName: "arrow.right")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -95,6 +129,22 @@ struct TTSConfigView: View {
                 Text("Azure").tag(DocumentReaderViewModel.TTSService.microsoftAzure)
             }
             .pickerStyle(MenuPickerStyle())
+            .onChange(of: viewModel.selectedTTSService) { _, _ in
+                viewModel.selectedEngine = "standard"
+                viewModel.selectedLanguage = "en-US"
+                viewModel.selectedVoice = ""
+            }
+            
+            Picker("Engine", selection: $viewModel.selectedEngine) {
+                ForEach(viewModel.availableEngines, id: \.self) { language in
+                    Text(language).tag(language)
+                }
+            }
+            .pickerStyle(MenuPickerStyle())
+            .onChange(of: viewModel.selectedEngine) { _, _ in
+                viewModel.selectedLanguage = "en-US"
+                viewModel.selectedVoice = ""
+            }
             
             Picker("Lang", selection: $viewModel.selectedLanguage) {
                 ForEach(viewModel.availableLanguages, id: \.self) { language in
@@ -102,6 +152,9 @@ struct TTSConfigView: View {
                 }
             }
             .pickerStyle(MenuPickerStyle())
+            .onChange(of: viewModel.selectedEngine) { _, _ in
+                viewModel.selectedVoice = ""
+            }
 
             Picker("Voice", selection: $viewModel.selectedVoice) {
                 ForEach(viewModel.availableVoices, id: \.self) { voice in

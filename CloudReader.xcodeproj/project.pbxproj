@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		604A8F322B3C563F00836DAF /* AWSCognitoIdentity in Frameworks */ = {isa = PBXBuildFile; productRef = 604A8F312B3C563F00836DAF /* AWSCognitoIdentity */; };
+		604A8F342B3C563F00836DAF /* AWSCognitoIdentityProvider in Frameworks */ = {isa = PBXBuildFile; productRef = 604A8F332B3C563F00836DAF /* AWSCognitoIdentityProvider */; };
+		604A8F362B3C563F00836DAF /* AWSCognitoSync in Frameworks */ = {isa = PBXBuildFile; productRef = 604A8F352B3C563F00836DAF /* AWSCognitoSync */; };
+		604A90842B3C564700836DAF /* AWSPolly in Frameworks */ = {isa = PBXBuildFile; productRef = 604A90832B3C564700836DAF /* AWSPolly */; };
+		604A91482B3CB36200836DAF /* RuntimeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604A91472B3CB36200836DAF /* RuntimeError.swift */; };
 		607283C82B3875D7002B5DAF /* CloudReaderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607283C72B3875D7002B5DAF /* CloudReaderApp.swift */; };
 		607283CA2B3875D7002B5DAF /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607283C92B3875D7002B5DAF /* Persistence.swift */; };
 		607283CD2B3875D7002B5DAF /* CloudReader.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 607283CB2B3875D7002B5DAF /* CloudReader.xcdatamodeld */; };
@@ -29,9 +34,11 @@
 		607284082B3AE68A002B5DAF /* GoogleCloudSynthesizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607284052B3AE68A002B5DAF /* GoogleCloudSynthesizer.swift */; };
 		607284092B3AE68A002B5DAF /* MicrosoftAzureSynthesizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607284062B3AE68A002B5DAF /* MicrosoftAzureSynthesizer.swift */; };
 		6072840A2B3AE68A002B5DAF /* AmazonPollySynthesizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607284072B3AE68A002B5DAF /* AmazonPollySynthesizer.swift */; };
+		60DFF5E42B3EB44C004E098C /* AmazonPollyCFN.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 60DFF5E32B3EB44C004E098C /* AmazonPollyCFN.yaml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		604A91472B3CB36200836DAF /* RuntimeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeError.swift; sourceTree = "<group>"; };
 		607283C42B3875D7002B5DAF /* CloudReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CloudReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607283C72B3875D7002B5DAF /* CloudReaderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudReaderApp.swift; sourceTree = "<group>"; };
 		607283C92B3875D7002B5DAF /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -56,6 +63,7 @@
 		607284052B3AE68A002B5DAF /* GoogleCloudSynthesizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleCloudSynthesizer.swift; sourceTree = "<group>"; };
 		607284062B3AE68A002B5DAF /* MicrosoftAzureSynthesizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MicrosoftAzureSynthesizer.swift; sourceTree = "<group>"; };
 		607284072B3AE68A002B5DAF /* AmazonPollySynthesizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonPollySynthesizer.swift; sourceTree = "<group>"; };
+		60DFF5E32B3EB44C004E098C /* AmazonPollyCFN.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = AmazonPollyCFN.yaml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,7 +71,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				604A8F322B3C563F00836DAF /* AWSCognitoIdentity in Frameworks */,
 				607283E42B39B2A5002B5DAF /* UniformTypeIdentifiers.framework in Frameworks */,
+				604A90842B3C564700836DAF /* AWSPolly in Frameworks */,
+				604A8F362B3C563F00836DAF /* AWSCognitoSync in Frameworks */,
+				604A8F342B3C563F00836DAF /* AWSCognitoIdentityProvider in Frameworks */,
 				607283E02B39B074002B5DAF /* MobileCoreServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -91,6 +103,7 @@
 		607283C62B3875D7002B5DAF /* CloudReader */ = {
 			isa = PBXGroup;
 			children = (
+				60DFF5E22B3EB414004E098C /* Dist */,
 				607283FC2B3A0CE8002B5DAF /* Utilities */,
 				607283E92B39BE90002B5DAF /* CoreData */,
 				607283E82B39BE8C002B5DAF /* Services */,
@@ -177,8 +190,17 @@
 			isa = PBXGroup;
 			children = (
 				607283FD2B3A0CFD002B5DAF /* FilePickerUtility.swift */,
+				604A91472B3CB36200836DAF /* RuntimeError.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		60DFF5E22B3EB414004E098C /* Dist */ = {
+			isa = PBXGroup;
+			children = (
+				60DFF5E32B3EB44C004E098C /* AmazonPollyCFN.yaml */,
+			);
+			path = Dist;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -197,6 +219,12 @@
 			dependencies = (
 			);
 			name = CloudReader;
+			packageProductDependencies = (
+				604A8F312B3C563F00836DAF /* AWSCognitoIdentity */,
+				604A8F332B3C563F00836DAF /* AWSCognitoIdentityProvider */,
+				604A8F352B3C563F00836DAF /* AWSCognitoSync */,
+				604A90832B3C564700836DAF /* AWSPolly */,
+			);
 			productName = CloudReader;
 			productReference = 607283C42B3875D7002B5DAF /* CloudReader.app */;
 			productType = "com.apple.product-type.application";
@@ -225,6 +253,9 @@
 				Base,
 			);
 			mainGroup = 607283BB2B3875D7002B5DAF;
+			packageReferences = (
+				604A8E922B3C563D00836DAF /* XCRemoteSwiftPackageReference "aws-sdk-swift" */,
+			);
 			productRefGroup = 607283C52B3875D7002B5DAF /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -240,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				607283D52B3875D9002B5DAF /* Preview Assets.xcassets in Resources */,
+				60DFF5E42B3EB44C004E098C /* AmazonPollyCFN.yaml in Resources */,
 				607283D12B3875D9002B5DAF /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -255,6 +287,7 @@
 				6072840A2B3AE68A002B5DAF /* AmazonPollySynthesizer.swift in Sources */,
 				607283C82B3875D7002B5DAF /* CloudReaderApp.swift in Sources */,
 				607283CA2B3875D7002B5DAF /* Persistence.swift in Sources */,
+				604A91482B3CB36200836DAF /* RuntimeError.swift in Sources */,
 				607283F52B39BF05002B5DAF /* DocumentReaderViewModel.swift in Sources */,
 				607283EB2B39BEB2002B5DAF /* AppDocument.swift in Sources */,
 				607283FE2B3A0CFD002B5DAF /* FilePickerUtility.swift in Sources */,
@@ -489,6 +522,40 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		604A8E922B3C563D00836DAF /* XCRemoteSwiftPackageReference "aws-sdk-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/awslabs/aws-sdk-swift";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.33.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		604A8F312B3C563F00836DAF /* AWSCognitoIdentity */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 604A8E922B3C563D00836DAF /* XCRemoteSwiftPackageReference "aws-sdk-swift" */;
+			productName = AWSCognitoIdentity;
+		};
+		604A8F332B3C563F00836DAF /* AWSCognitoIdentityProvider */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 604A8E922B3C563D00836DAF /* XCRemoteSwiftPackageReference "aws-sdk-swift" */;
+			productName = AWSCognitoIdentityProvider;
+		};
+		604A8F352B3C563F00836DAF /* AWSCognitoSync */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 604A8E922B3C563D00836DAF /* XCRemoteSwiftPackageReference "aws-sdk-swift" */;
+			productName = AWSCognitoSync;
+		};
+		604A90832B3C564700836DAF /* AWSPolly */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 604A8E922B3C563D00836DAF /* XCRemoteSwiftPackageReference "aws-sdk-swift" */;
+			productName = AWSPolly;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		607283CB2B3875D7002B5DAF /* CloudReader.xcdatamodeld */ = {

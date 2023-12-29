@@ -1,13 +1,27 @@
 import AVFoundation
 
-class GoogleCloudSynthesizer: SpeechSynthesizerProtocol {
+class GoogleCloudSynthesizer: NSObject, SpeechSynthesizerProtocol, AVSpeechSynthesizerDelegate {
+    weak var delegate: SpeechSynthesizerDelegate?
     private let synthesizer = AVSpeechSynthesizer()
+    private var sentences: [String]
+    private var currentSpeakingRange: NSRange = NSRange()
     internal var selectedVoiceIdentifier: String = "com.apple.voice.compact.en-US.Samantha"
     internal var selectedLanguageCode: String = "en-US"
+    internal var selectedEngine: String = "standard"
+    
+    init(sentences: [String], delegate: SpeechSynthesizerDelegate?) {
+        self.sentences = sentences
+        self.delegate = delegate
+        super.init()
+        synthesizer.delegate = self
+    }
 
+    func setEngine(engine: String) {
+        selectedEngine = engine
+    }
+    
     func setLanguage(language: String) {
         selectedLanguageCode = language
-        // Update the selected voice based on the new language if needed
     }
 
     func setVoice(voice: String) {
@@ -23,10 +37,15 @@ class GoogleCloudSynthesizer: SpeechSynthesizerProtocol {
     func stopSpeaking() {
         synthesizer.stopSpeaking(at: .immediate)
     }
+    
+    func supportedEngines() -> [String] {
+        return ["standard"]
+    }
 
     func supportedLanguages() -> [String] {
-        // Return a list of supported languages
-        return AVSpeechSynthesisVoice.speechVoices().map { $0.language }
+        let allLanguages = AVSpeechSynthesisVoice.speechVoices().map { $0.language }
+        let uniqueLanguages = Set(allLanguages)
+        return Array(uniqueLanguages).sorted()  // Convert back to sorted array
     }
 
     func supportedVoices() -> [String] {
@@ -35,6 +54,8 @@ class GoogleCloudSynthesizer: SpeechSynthesizerProtocol {
                .filter { $0.language == selectedLanguageCode }
                .map { $0.identifier }
     }
-
-    // ... other methods ...
+    
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        delegate?.didFinishSpeaking()
+    }
 }

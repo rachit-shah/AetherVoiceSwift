@@ -7,6 +7,7 @@ class LocalSpeechSynthesizer: NSObject, SpeechSynthesizerProtocol, AVSpeechSynth
     private var currentSpeakingRange: NSRange = NSRange()
     internal var selectedVoiceIdentifier: String = "com.apple.voice.compact.en-US.Samantha"
     internal var selectedLanguageCode: String = "en-US"
+    internal var selectedEngine: String = "standard"
     
     init(sentences: [String], delegate: SpeechSynthesizerDelegate?) {
         self.sentences = sentences
@@ -15,9 +16,12 @@ class LocalSpeechSynthesizer: NSObject, SpeechSynthesizerProtocol, AVSpeechSynth
         synthesizer.delegate = self
     }
 
+    func setEngine(engine: String) {
+        selectedEngine = engine
+    }
+    
     func setLanguage(language: String) {
         selectedLanguageCode = language
-        // Update the selected voice based on the new language if needed
     }
 
     func setVoice(voice: String) {
@@ -28,10 +32,15 @@ class LocalSpeechSynthesizer: NSObject, SpeechSynthesizerProtocol, AVSpeechSynth
         let utterance = AVSpeechUtterance(string: text)
         utterance.voice = AVSpeechSynthesisVoice(identifier: selectedVoiceIdentifier)
         synthesizer.speak(utterance)
+        print("Speaking text Local: \(text).")
     }
 
     func stopSpeaking() {
         synthesizer.stopSpeaking(at: .immediate)
+    }
+    
+    func supportedEngines() -> [String] {
+        return ["standard"]
     }
 
     func supportedLanguages() -> [String] {
@@ -46,15 +55,8 @@ class LocalSpeechSynthesizer: NSObject, SpeechSynthesizerProtocol, AVSpeechSynth
                .filter { $0.language == selectedLanguageCode }
                .map { $0.identifier }
     }
-
-    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, willSpeakRangeOfSpeechString characterRange: NSRange, utterance: AVSpeechUtterance) {
-        guard let range = Range(characterRange, in: utterance.speechString) else { return }
-        updateCurrentSentenceIndex(speechString: utterance.speechString, upTo: range.lowerBound)
-    }
-
-    private func updateCurrentSentenceIndex(speechString: String, upTo index: String.Index) {
-        let substring = String(speechString[..<index])
-        let sentences = DocumentReaderViewModel.splitIntoSentences(text: substring)
-        delegate?.didStartSpeaking(sentenceIndex: sentences.count - 1)
+    
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        delegate?.didFinishSpeaking()
     }
 }

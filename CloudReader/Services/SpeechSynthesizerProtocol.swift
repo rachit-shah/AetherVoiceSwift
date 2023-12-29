@@ -1,15 +1,19 @@
 protocol SpeechSynthesizerProtocol {
     var selectedVoiceIdentifier: String { get }
     var selectedLanguageCode: String { get }
-    func speak(text: String)
+    var selectedEngine: String { get }
+    var delegate: SpeechSynthesizerDelegate? { get set }
+    func speak(text: String) async
     func stopSpeaking()
-    func supportedLanguages() -> [String]
-    func supportedVoices() -> [String]
+    func supportedEngines() -> [String]
+    func supportedLanguages() async -> [String]
+    func supportedVoices() async -> [String]
+    func setEngine(engine: String)
     func setLanguage(language: String)
     func setVoice(voice: String)
     // Add other common methods as needed
 }
 
 protocol SpeechSynthesizerDelegate: AnyObject {
-    func didStartSpeaking(sentenceIndex: Int)
+    func didFinishSpeaking()
 }

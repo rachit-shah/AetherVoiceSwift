@@ -1,6 +1,6 @@
 //
-//  CloudReaderApp.swift
-//  CloudReader
+//  AetherVoiceApp.swift
+//  AetherVoice
 //
 //  Created by Rachit Shah on 12/24/23.
 //
@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct CloudReaderApp: App {
+struct AetherVoiceApp: App {
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {

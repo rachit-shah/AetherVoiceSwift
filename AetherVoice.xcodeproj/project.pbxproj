@@ -12,9 +12,9 @@
 		604A8F362B3C563F00836DAF /* AWSCognitoSync in Frameworks */ = {isa = PBXBuildFile; productRef = 604A8F352B3C563F00836DAF /* AWSCognitoSync */; };
 		604A90842B3C564700836DAF /* AWSPolly in Frameworks */ = {isa = PBXBuildFile; productRef = 604A90832B3C564700836DAF /* AWSPolly */; };
 		604A91482B3CB36200836DAF /* RuntimeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604A91472B3CB36200836DAF /* RuntimeError.swift */; };
-		607283C82B3875D7002B5DAF /* CloudReaderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607283C72B3875D7002B5DAF /* CloudReaderApp.swift */; };
+		607283C82B3875D7002B5DAF /* AetherVoiceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607283C72B3875D7002B5DAF /* AetherVoiceApp.swift */; };
 		607283CA2B3875D7002B5DAF /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607283C92B3875D7002B5DAF /* Persistence.swift */; };
-		607283CD2B3875D7002B5DAF /* CloudReader.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 607283CB2B3875D7002B5DAF /* CloudReader.xcdatamodeld */; };
+		607283CD2B3875D7002B5DAF /* AetherVoice.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 607283CB2B3875D7002B5DAF /* AetherVoice.xcdatamodeld */; };
 		607283CF2B3875D7002B5DAF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607283CE2B3875D7002B5DAF /* ContentView.swift */; };
 		607283D12B3875D9002B5DAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607283D02B3875D9002B5DAF /* Assets.xcassets */; };
 		607283D52B3875D9002B5DAF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607283D42B3875D9002B5DAF /* Preview Assets.xcassets */; };
@@ -41,13 +41,13 @@
 
 /* Begin PBXFileReference section */
 		604A91472B3CB36200836DAF /* RuntimeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeError.swift; sourceTree = "<group>"; };
-		607283C42B3875D7002B5DAF /* CloudReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CloudReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		607283C72B3875D7002B5DAF /* CloudReaderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudReaderApp.swift; sourceTree = "<group>"; };
+		607283C42B3875D7002B5DAF /* AetherVoice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AetherVoice.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		607283C72B3875D7002B5DAF /* AetherVoiceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AetherVoiceApp.swift; sourceTree = "<group>"; };
 		607283C92B3875D7002B5DAF /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		607283CC2B3875D7002B5DAF /* CloudReader.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CloudReader.xcdatamodel; sourceTree = "<group>"; };
 		607283CE2B3875D7002B5DAF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		607283D02B3875D9002B5DAF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		607283D22B3875D9002B5DAF /* CloudReader.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CloudReader.entitlements; sourceTree = "<group>"; };
+		607283D22B3875D9002B5DAF /* AetherVoice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AetherVoice.entitlements; sourceTree = "<group>"; };
 		607283D42B3875D9002B5DAF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		607283DE2B3882E0002B5DAF /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS17.2.sdk/System/Library/Frameworks/MobileCoreServices.framework; sourceTree = DEVELOPER_DIR; };
 		607283E32B39B2A5002B5DAF /* UniformTypeIdentifiers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniformTypeIdentifiers.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS17.2.sdk/System/Library/Frameworks/UniformTypeIdentifiers.framework; sourceTree = DEVELOPER_DIR; };
@@ -91,7 +91,7 @@
 		607283BB2B3875D7002B5DAF = {
 			isa = PBXGroup;
 			children = (
-				607283C62B3875D7002B5DAF /* CloudReader */,
+				607283C62B3875D7002B5DAF /* AetherVoice */,
 				607283C52B3875D7002B5DAF /* Products */,
 				607283DD2B3882E0002B5DAF /* Frameworks */,
 			);
@@ -100,12 +100,12 @@
 		607283C52B3875D7002B5DAF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				607283C42B3875D7002B5DAF /* CloudReader.app */,
+				607283C42B3875D7002B5DAF /* AetherVoice.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		607283C62B3875D7002B5DAF /* CloudReader */ = {
+		607283C62B3875D7002B5DAF /* AetherVoice */ = {
 			isa = PBXGroup;
 			children = (
 				60DFF5E22B3EB414004E098C /* Dist */,
@@ -115,15 +115,15 @@
 				607283E72B39BE84002B5DAF /* ViewModels */,
 				607283E62B39BE76002B5DAF /* Views */,
 				607283E52B39BE67002B5DAF /* Models */,
-				607283C72B3875D7002B5DAF /* CloudReaderApp.swift */,
+				607283C72B3875D7002B5DAF /* AetherVoiceApp.swift */,
 				607283CE2B3875D7002B5DAF /* ContentView.swift */,
 				607283D02B3875D9002B5DAF /* Assets.xcassets */,
-				607283D22B3875D9002B5DAF /* CloudReader.entitlements */,
-				607283CB2B3875D7002B5DAF /* CloudReader.xcdatamodeld */,
+				607283D22B3875D9002B5DAF /* AetherVoice.entitlements */,
+				607283CB2B3875D7002B5DAF /* AetherVoice.xcdatamodeld */,
 				607283D32B3875D9002B5DAF /* Preview Content */,
 				60DFF5E52B3EB5F7004E098C /* README.md */,
 			);
-			path = CloudReader;
+			path = AetherVoice;
 			sourceTree = "<group>";
 		};
 		607283D32B3875D9002B5DAF /* Preview Content */ = {
@@ -214,9 +214,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		607283C32B3875D7002B5DAF /* CloudReader */ = {
+		607283C32B3875D7002B5DAF /* AetherVoice */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 607283D82B3875D9002B5DAF /* Build configuration list for PBXNativeTarget "CloudReader" */;
+			buildConfigurationList = 607283D82B3875D9002B5DAF /* Build configuration list for PBXNativeTarget "AetherVoice" */;
 			buildPhases = (
 				607283C02B3875D7002B5DAF /* Sources */,
 				607283C12B3875D7002B5DAF /* Frameworks */,
@@ -226,7 +226,7 @@
 			);
 			dependencies = (
 			);
-			name = CloudReader;
+			name = AetherVoice;
 			packageProductDependencies = (
 				604A8F312B3C563F00836DAF /* AWSCognitoIdentity */,
 				604A8F332B3C563F00836DAF /* AWSCognitoIdentityProvider */,
@@ -234,7 +234,7 @@
 				604A90832B3C564700836DAF /* AWSPolly */,
 			);
 			productName = CloudReader;
-			productReference = 607283C42B3875D7002B5DAF /* CloudReader.app */;
+			productReference = 607283C42B3875D7002B5DAF /* AetherVoice.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -252,7 +252,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 607283BF2B3875D7002B5DAF /* Build configuration list for PBXProject "CloudReader" */;
+			buildConfigurationList = 607283BF2B3875D7002B5DAF /* Build configuration list for PBXProject "AetherVoice" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -268,7 +268,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				607283C32B3875D7002B5DAF /* CloudReader */,
+				607283C32B3875D7002B5DAF /* AetherVoice */,
 			);
 		};
 /* End PBXProject section */
@@ -293,7 +293,7 @@
 			files = (
 				607283EF2B39BEDE002B5DAF /* DocumentReaderView.swift in Sources */,
 				6072840A2B3AE68A002B5DAF /* AmazonPollySynthesizer.swift in Sources */,
-				607283C82B3875D7002B5DAF /* CloudReaderApp.swift in Sources */,
+				607283C82B3875D7002B5DAF /* AetherVoiceApp.swift in Sources */,
 				60DFF5E92B3EF375004E098C /* KeychainWrapper.swift in Sources */,
 				607283CA2B3875D7002B5DAF /* Persistence.swift in Sources */,
 				604A91482B3CB36200836DAF /* RuntimeError.swift in Sources */,
@@ -308,7 +308,7 @@
 				607284002B3A1099002B5DAF /* DocumentPickerView.swift in Sources */,
 				607284082B3AE68A002B5DAF /* GoogleCloudSynthesizer.swift in Sources */,
 				607284022B3AD993002B5DAF /* SpeechSynthesizerProtocol.swift in Sources */,
-				607283CD2B3875D7002B5DAF /* CloudReader.xcdatamodeld in Sources */,
+				607283CD2B3875D7002B5DAF /* AetherVoice.xcdatamodeld in Sources */,
 				607284042B3AD9B2002B5DAF /* LocalSpeechSynthesizer.swift in Sources */,
 				607283ED2B39BEC8002B5DAF /* DocumentListView.swift in Sources */,
 				607283F32B39BEF9002B5DAF /* DocumentListViewModel.swift in Sources */,
@@ -437,14 +437,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = CloudReader/CloudReader.entitlements;
+				CODE_SIGN_ENTITLEMENTS = AetherVoice/AetherVoice.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"CloudReader/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"AetherVoice/Preview Content\"";
 				DEVELOPMENT_TEAM = G964Q9M6Q3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = AetherVoice;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -461,8 +463,9 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ract.CloudReader;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ract.AetherVoice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -476,14 +479,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = CloudReader/CloudReader.entitlements;
+				CODE_SIGN_ENTITLEMENTS = AetherVoice/AetherVoice.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"CloudReader/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"AetherVoice/Preview Content\"";
 				DEVELOPMENT_TEAM = G964Q9M6Q3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = AetherVoice;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -500,8 +505,9 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ract.CloudReader;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ract.AetherVoice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -513,7 +519,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		607283BF2B3875D7002B5DAF /* Build configuration list for PBXProject "CloudReader" */ = {
+		607283BF2B3875D7002B5DAF /* Build configuration list for PBXProject "AetherVoice" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				607283D62B3875D9002B5DAF /* Debug */,
@@ -522,7 +528,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		607283D82B3875D9002B5DAF /* Build configuration list for PBXNativeTarget "CloudReader" */ = {
+		607283D82B3875D9002B5DAF /* Build configuration list for PBXNativeTarget "AetherVoice" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				607283D92B3875D9002B5DAF /* Debug */,
@@ -568,13 +574,13 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		607283CB2B3875D7002B5DAF /* CloudReader.xcdatamodeld */ = {
+		607283CB2B3875D7002B5DAF /* AetherVoice.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				607283CC2B3875D7002B5DAF /* CloudReader.xcdatamodel */,
 			);
 			currentVersion = 607283CC2B3875D7002B5DAF /* CloudReader.xcdatamodel */;
-			path = CloudReader.xcdatamodeld;
+			path = AetherVoice.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

@@ -100,9 +100,16 @@ struct DocumentReaderView: View {
             }
             #endif
         }
+        #if os(iOS)
         .sheet(isPresented: $showingSettings) {
             TTSConfigView(viewModel: viewModel)
         }
+        #elseif os(macOS)
+        .popover(isPresented: $showingSettings) {
+            TTSConfigView(viewModel: viewModel)
+                .padding()
+        }
+        #endif
         .navigationTitle(viewModel.document.title)
         .onDisappear {
             viewModel.stopReadingText()

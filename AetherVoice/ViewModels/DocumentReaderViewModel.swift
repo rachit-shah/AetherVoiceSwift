@@ -20,17 +20,17 @@ class DocumentReaderViewModel: ObservableObject, SpeechSynthesizerDelegate {
             }
         }
     }
-    @Published var selectedVoice: String = "Joanna" {
+    @Published var selectedVoice: String = "com.apple.voice.compact.en-US.Samantha" {
         didSet {
             stopReadingText()
             updateSynthesizerVoice()
         }
     }
     @Published var availableLanguages: [String] = ["en-US"]
-    @Published var availableVoices: [String] = ["Default"]
+    @Published var availableVoices: [String] = ["com.apple.voice.compact.en-US.Samantha"]
     @Published var availableEngines: [String] = ["standard"]
     
-    @Published var selectedTTSService: TTSService = .amazonPolly {
+    @Published var selectedTTSService: TTSService = .local {
         didSet {
             Task {
                 stopReadingText()

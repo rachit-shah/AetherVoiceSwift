@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "607283C32B3875D7002B5DAF"
-               BuildableName = "CloudReader.app"
-               BlueprintName = "CloudReader"
-               ReferencedContainer = "container:CloudReader.xcodeproj">
+               BuildableName = "AetherVoice.app"
+               BlueprintName = "AetherVoice"
+               ReferencedContainer = "container:AetherVoice.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -44,9 +44,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "607283C32B3875D7002B5DAF"
-            BuildableName = "CloudReader.app"
-            BlueprintName = "CloudReader"
-            ReferencedContainer = "container:CloudReader.xcodeproj">
+            BuildableName = "AetherVoice.app"
+            BlueprintName = "AetherVoice"
+            ReferencedContainer = "container:AetherVoice.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -61,9 +61,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "607283C32B3875D7002B5DAF"
-            BuildableName = "CloudReader.app"
-            BlueprintName = "CloudReader"
-            ReferencedContainer = "container:CloudReader.xcodeproj">
+            BuildableName = "AetherVoice.app"
+            BlueprintName = "AetherVoice"
+            ReferencedContainer = "container:AetherVoice.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

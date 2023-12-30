@@ -8,6 +8,9 @@ struct SettingsView: View {
     var body: some View {
         Form {
             Section(header: Text("AWS Configuration")) {
+                Text("The Identity Pool ID acts like a password to access your AWS account's Polly resources. Don't share it with anyone. The value will be securely stored in your keychain upon entering it.")
+                    .font(.caption)
+                    .foregroundColor(.gray)
                 if isEditing {
                     TextField("Identity Pool ID", text: $identityPoolID)
                 } else {
@@ -27,7 +30,7 @@ struct SettingsView: View {
                 }
             }
             Section(header: Text("Estimated Bill in your AWS account")) {
-                Text("Explanation: This estimate is based on the number of characters processed by each engine type and their respective costs as per Amazon Polly pricing. Note: This doesn't factor in any free-tier benefits you might have remaining.")
+                Text("This estimate is based on the number of characters processed by each engine type and their respective costs as per Amazon Polly pricing. Note: This doesn't factor in any free-tier benefits you might have remaining.")
                                     .font(.caption)
                                     .foregroundColor(.gray)
                 Link("Learn more about Polly Pricing", destination: URL(string: "https://aws.amazon.com/polly/pricing/")!)

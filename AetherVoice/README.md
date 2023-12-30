@@ -1,4 +1,4 @@
-# Cloud Reader (Text-to-Speech)
+# AetherVoice Cloud Reader (Text-to-Speech)
 
 ## Overview
 This project builds a multiplatform iOS/macOS application that can:
@@ -25,4 +25,4 @@ Just build the project in Xcode, sign it for local development and install it in
 2. Open the AWS Console -> select any region you like (in the region selector on top-right)
 3. Search for CloudFormation in the Console search -> Create Stack -> Upload a template -> Use the template in the [Dist/AmazonPollyCFN.yaml](Dist/AmazonPollyCFN.yaml)
 4. Wait for stack to complete creation and then note down the value of `identityPoolId` in the Outputs tab of the stack
-5. Provide the identityPoolId in the environment variables of Xcode (Product -> Scheme -> Edit Scheme -> Value for COGNITO_IDENTITY_POOL_ID)
+5. Provide the identityPoolId in AWS configuration in the Settings of the app. (Note: the identityPoolId acts like a password to access your AWS account's Polly resources. Don't share it with anyone. The value will be securely stored in your keychain upon entering it)

@@ -19,15 +19,26 @@ struct ContentView: View {
                     settingsButton
                     addButtoniOS
                 })
-                #elseif os(macOS)
-                .toolbar { ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    settingsButton
-                    addButtonmacOS
-                } }
-                #endif
                 .sheet(isPresented: $showingSettings) {
                     SettingsView()
                 }
+                #elseif os(macOS)
+                .toolbar {
+                    ToolbarItemGroup(placement: .automatic) {
+                        Button(action: {
+                            self.showingSettings.toggle()
+                        }) {
+                            Label("Settings", systemImage: "gear")
+                        }
+                        .popover(isPresented: $showingSettings) {
+                            SettingsView()
+                                .frame(width: 300)
+                                .padding()
+                        }
+                        addButtonmacOS
+                    }
+                }
+                #endif
         }
     }
     

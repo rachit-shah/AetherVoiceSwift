@@ -1,12 +1,12 @@
 AWSTemplateFormatVersion: 2010-09-09
 Resources:
-  CloudReaderCognito:
+  AetherVoiceCognito:
     Type: 'AWS::Cognito::IdentityPool'
     Properties:
-      IdentityPoolName: CloudReaderCognito
+      IdentityPoolName: AetherVoiceCognito
       AllowUnauthenticatedIdentities: true
   # Create an IAM Cognito authenticated role for users to access AWS resources. Same perms as Unauth Role for now.
-  CloudReaderAmazonPollyAccess:
+  AetherVoiceAmazonPollyAccess:
     Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
@@ -19,7 +19,7 @@ Resources:
               - "sts:AssumeRoleWithWebIdentity"
             Condition:
               StringEquals:
-                "cognito-identity.amazonaws.com:aud": !Ref CloudReaderCognito
+                "cognito-identity.amazonaws.com:aud": !Ref AetherVoiceCognito
               "ForAnyValue:StringLike":
                 "cognito-identity.amazonaws.com:amr": unauthenticated
       Policies:
@@ -40,13 +40,13 @@ Resources:
   IdentityPoolRoleMapping:
     Type: "AWS::Cognito::IdentityPoolRoleAttachment"
     Properties:
-      IdentityPoolId: !Ref CloudReaderCognito
+      IdentityPoolId: !Ref AetherVoiceCognito
       Roles:
-        unauthenticated: !GetAtt CloudReaderAmazonPollyAccess.Arn
+        unauthenticated: !GetAtt AetherVoiceAmazonPollyAccess.Arn
 
 # Use these values to cut from the CloudFormation Console and paste into our service configuration
 Outputs:
   identityPoolId:
-    Value: !Ref CloudReaderCognito
+    Value: !Ref AetherVoiceCognito
   unauthRoleArn:
-    Value: !GetAtt CloudReaderAmazonPollyAccess.Arn
+    Value: !GetAtt AetherVoiceAmazonPollyAccess.Arn

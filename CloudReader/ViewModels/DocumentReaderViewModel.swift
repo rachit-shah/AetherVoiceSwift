@@ -43,7 +43,7 @@ class DocumentReaderViewModel: ObservableObject, SpeechSynthesizerDelegate {
         didSet {
             Task {
                 stopReadingText()
-                await updateVoicesForSelectedLanguage()
+                await updateVoicesForSelectedEngine()
             }
         }
     }
@@ -124,6 +124,16 @@ class DocumentReaderViewModel: ObservableObject, SpeechSynthesizerDelegate {
         selectedLanguage = speechSynthesizer.selectedLanguageCode
         selectedVoice = speechSynthesizer.selectedVoiceIdentifier
         speechSynthesizer.setLanguage(language: selectedLanguage)
+        speechSynthesizer.setVoice(voice: selectedVoice)
+        saveTTSSettings()
+    }
+    
+    private func updateVoicesForSelectedEngine() async {
+        availableLanguages = await speechSynthesizer.supportedLanguages()
+        speechSynthesizer.setEngine(engine: selectedEngine)
+        speechSynthesizer.setLanguage(language: selectedLanguage)
+        availableVoices = await speechSynthesizer.supportedVoices()
+        selectedVoice = availableVoices.first ?? "Default"
         speechSynthesizer.setVoice(voice: selectedVoice)
         saveTTSSettings()
     }

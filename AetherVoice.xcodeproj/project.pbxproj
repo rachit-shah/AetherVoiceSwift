@@ -23,10 +23,8 @@
 		607283EB2B39BEB2002B5DAF /* AppDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607283EA2B39BEB2002B5DAF /* AppDocument.swift */; };
 		607283ED2B39BEC8002B5DAF /* DocumentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607283EC2B39BEC8002B5DAF /* DocumentListView.swift */; };
 		607283EF2B39BEDE002B5DAF /* DocumentReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607283EE2B39BEDE002B5DAF /* DocumentReaderView.swift */; };
-		607283F12B39BEE7002B5DAF /* DocumentUploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607283F02B39BEE7002B5DAF /* DocumentUploadView.swift */; };
 		607283F32B39BEF9002B5DAF /* DocumentListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607283F22B39BEF9002B5DAF /* DocumentListViewModel.swift */; };
 		607283F52B39BF05002B5DAF /* DocumentReaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607283F42B39BF05002B5DAF /* DocumentReaderViewModel.swift */; };
-		607283FB2B39C072002B5DAF /* DocumentUploadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607283FA2B39C072002B5DAF /* DocumentUploadViewModel.swift */; };
 		607283FE2B3A0CFD002B5DAF /* FilePickerUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607283FD2B3A0CFD002B5DAF /* FilePickerUtility.swift */; };
 		607284002B3A1099002B5DAF /* DocumentPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607283FF2B3A1099002B5DAF /* DocumentPickerView.swift */; };
 		607284022B3AD993002B5DAF /* SpeechSynthesizerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607284012B3AD993002B5DAF /* SpeechSynthesizerProtocol.swift */; };
@@ -54,10 +52,8 @@
 		607283EA2B39BEB2002B5DAF /* AppDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDocument.swift; sourceTree = "<group>"; };
 		607283EC2B39BEC8002B5DAF /* DocumentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentListView.swift; sourceTree = "<group>"; };
 		607283EE2B39BEDE002B5DAF /* DocumentReaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentReaderView.swift; sourceTree = "<group>"; };
-		607283F02B39BEE7002B5DAF /* DocumentUploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentUploadView.swift; sourceTree = "<group>"; };
 		607283F22B39BEF9002B5DAF /* DocumentListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentListViewModel.swift; sourceTree = "<group>"; };
 		607283F42B39BF05002B5DAF /* DocumentReaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentReaderViewModel.swift; sourceTree = "<group>"; };
-		607283FA2B39C072002B5DAF /* DocumentUploadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentUploadViewModel.swift; sourceTree = "<group>"; };
 		607283FD2B3A0CFD002B5DAF /* FilePickerUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePickerUtility.swift; sourceTree = "<group>"; };
 		607283FF2B3A1099002B5DAF /* DocumentPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPickerView.swift; sourceTree = "<group>"; };
 		607284012B3AD993002B5DAF /* SpeechSynthesizerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSynthesizerProtocol.swift; sourceTree = "<group>"; };
@@ -156,7 +152,6 @@
 			children = (
 				607283EC2B39BEC8002B5DAF /* DocumentListView.swift */,
 				607283EE2B39BEDE002B5DAF /* DocumentReaderView.swift */,
-				607283F02B39BEE7002B5DAF /* DocumentUploadView.swift */,
 				607283FF2B3A1099002B5DAF /* DocumentPickerView.swift */,
 				60DFF5E62B3EECB7004E098C /* SettingsView.swift */,
 			);
@@ -168,7 +163,6 @@
 			children = (
 				607283F22B39BEF9002B5DAF /* DocumentListViewModel.swift */,
 				607283F42B39BF05002B5DAF /* DocumentReaderViewModel.swift */,
-				607283FA2B39C072002B5DAF /* DocumentUploadViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -301,8 +295,6 @@
 				607283F52B39BF05002B5DAF /* DocumentReaderViewModel.swift in Sources */,
 				607283EB2B39BEB2002B5DAF /* AppDocument.swift in Sources */,
 				607283FE2B3A0CFD002B5DAF /* FilePickerUtility.swift in Sources */,
-				607283FB2B39C072002B5DAF /* DocumentUploadViewModel.swift in Sources */,
-				607283F12B39BEE7002B5DAF /* DocumentUploadView.swift in Sources */,
 				607283CF2B3875D7002B5DAF /* ContentView.swift in Sources */,
 				607284092B3AE68A002B5DAF /* MicrosoftAzureSynthesizer.swift in Sources */,
 				607284002B3A1099002B5DAF /* DocumentPickerView.swift in Sources */,

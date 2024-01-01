@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6040521C2B40414E00100DC5 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 6040521B2B40414E00100DC5 /* README.md */; };
+		604052202B405DC700100DC5 /* AWSSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6040521F2B405DC700100DC5 /* AWSSettingsView.swift */; };
+		604052222B405DF200100DC5 /* GCPSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604052212B405DF200100DC5 /* GCPSettingsView.swift */; };
+		604052A82B40892B00100DC5 /* GoogleAPIClientForREST_Texttospeech in Frameworks */ = {isa = PBXBuildFile; productRef = 604052A72B40892B00100DC5 /* GoogleAPIClientForREST_Texttospeech */; };
+		604052AA2B42DFB400100DC5 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604052A92B42DFB400100DC5 /* SplashView.swift */; };
+		604052AE2B42EF8400100DC5 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 604052AD2B42EF8400100DC5 /* AppKit.framework */; platformFilters = (macos, ); };
 		604A8F322B3C563F00836DAF /* AWSCognitoIdentity in Frameworks */ = {isa = PBXBuildFile; productRef = 604A8F312B3C563F00836DAF /* AWSCognitoIdentity */; };
-		604A8F342B3C563F00836DAF /* AWSCognitoIdentityProvider in Frameworks */ = {isa = PBXBuildFile; productRef = 604A8F332B3C563F00836DAF /* AWSCognitoIdentityProvider */; };
-		604A8F362B3C563F00836DAF /* AWSCognitoSync in Frameworks */ = {isa = PBXBuildFile; productRef = 604A8F352B3C563F00836DAF /* AWSCognitoSync */; };
 		604A90842B3C564700836DAF /* AWSPolly in Frameworks */ = {isa = PBXBuildFile; productRef = 604A90832B3C564700836DAF /* AWSPolly */; };
 		604A91482B3CB36200836DAF /* RuntimeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604A91472B3CB36200836DAF /* RuntimeError.swift */; };
 		607283C82B3875D7002B5DAF /* AetherVoiceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607283C72B3875D7002B5DAF /* AetherVoiceApp.swift */; };
@@ -38,6 +42,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6040521B2B40414E00100DC5 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		6040521F2B405DC700100DC5 /* AWSSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSSettingsView.swift; sourceTree = "<group>"; };
+		604052212B405DF200100DC5 /* GCPSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCPSettingsView.swift; sourceTree = "<group>"; };
+		604052A92B42DFB400100DC5 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		604052AD2B42EF8400100DC5 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		604A91472B3CB36200836DAF /* RuntimeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeError.swift; sourceTree = "<group>"; };
 		607283C42B3875D7002B5DAF /* AetherVoice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AetherVoice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607283C72B3875D7002B5DAF /* AetherVoiceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AetherVoiceApp.swift; sourceTree = "<group>"; };
@@ -62,7 +71,6 @@
 		607284062B3AE68A002B5DAF /* MicrosoftAzureSynthesizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MicrosoftAzureSynthesizer.swift; sourceTree = "<group>"; };
 		607284072B3AE68A002B5DAF /* AmazonPollySynthesizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonPollySynthesizer.swift; sourceTree = "<group>"; };
 		60DFF5E32B3EB44C004E098C /* AmazonPollyCFN.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = AmazonPollyCFN.yaml; sourceTree = "<group>"; };
-		60DFF5E52B3EB5F7004E098C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		60DFF5E62B3EECB7004E098C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		60DFF5E82B3EF375004E098C /* KeychainWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -73,10 +81,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				604A8F322B3C563F00836DAF /* AWSCognitoIdentity in Frameworks */,
+				604052A82B40892B00100DC5 /* GoogleAPIClientForREST_Texttospeech in Frameworks */,
 				607283E42B39B2A5002B5DAF /* UniformTypeIdentifiers.framework in Frameworks */,
+				604052AE2B42EF8400100DC5 /* AppKit.framework in Frameworks */,
 				604A90842B3C564700836DAF /* AWSPolly in Frameworks */,
-				604A8F362B3C563F00836DAF /* AWSCognitoSync in Frameworks */,
-				604A8F342B3C563F00836DAF /* AWSCognitoIdentityProvider in Frameworks */,
 				607283E02B39B074002B5DAF /* MobileCoreServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -87,6 +95,7 @@
 		607283BB2B3875D7002B5DAF = {
 			isa = PBXGroup;
 			children = (
+				6040521B2B40414E00100DC5 /* README.md */,
 				607283C62B3875D7002B5DAF /* AetherVoice */,
 				607283C52B3875D7002B5DAF /* Products */,
 				607283DD2B3882E0002B5DAF /* Frameworks */,
@@ -112,12 +121,10 @@
 				607283E62B39BE76002B5DAF /* Views */,
 				607283E52B39BE67002B5DAF /* Models */,
 				607283C72B3875D7002B5DAF /* AetherVoiceApp.swift */,
-				607283CE2B3875D7002B5DAF /* ContentView.swift */,
 				607283D02B3875D9002B5DAF /* Assets.xcassets */,
 				607283D22B3875D9002B5DAF /* AetherVoice.entitlements */,
 				607283CB2B3875D7002B5DAF /* AetherVoice.xcdatamodeld */,
 				607283D32B3875D9002B5DAF /* Preview Content */,
-				60DFF5E52B3EB5F7004E098C /* README.md */,
 			);
 			path = AetherVoice;
 			sourceTree = "<group>";
@@ -133,6 +140,7 @@
 		607283DD2B3882E0002B5DAF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				604052AD2B42EF8400100DC5 /* AppKit.framework */,
 				607283E32B39B2A5002B5DAF /* UniformTypeIdentifiers.framework */,
 				607283DE2B3882E0002B5DAF /* MobileCoreServices.framework */,
 			);
@@ -150,10 +158,14 @@
 		607283E62B39BE76002B5DAF /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				604052A92B42DFB400100DC5 /* SplashView.swift */,
+				607283CE2B3875D7002B5DAF /* ContentView.swift */,
 				607283EC2B39BEC8002B5DAF /* DocumentListView.swift */,
 				607283EE2B39BEDE002B5DAF /* DocumentReaderView.swift */,
 				607283FF2B3A1099002B5DAF /* DocumentPickerView.swift */,
 				60DFF5E62B3EECB7004E098C /* SettingsView.swift */,
+				6040521F2B405DC700100DC5 /* AWSSettingsView.swift */,
+				604052212B405DF200100DC5 /* GCPSettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -223,9 +235,8 @@
 			name = AetherVoice;
 			packageProductDependencies = (
 				604A8F312B3C563F00836DAF /* AWSCognitoIdentity */,
-				604A8F332B3C563F00836DAF /* AWSCognitoIdentityProvider */,
-				604A8F352B3C563F00836DAF /* AWSCognitoSync */,
 				604A90832B3C564700836DAF /* AWSPolly */,
+				604052A72B40892B00100DC5 /* GoogleAPIClientForREST_Texttospeech */,
 			);
 			productName = CloudReader;
 			productReference = 607283C42B3875D7002B5DAF /* AetherVoice.app */;
@@ -257,6 +268,8 @@
 			mainGroup = 607283BB2B3875D7002B5DAF;
 			packageReferences = (
 				604A8E922B3C563D00836DAF /* XCRemoteSwiftPackageReference "aws-sdk-swift" */,
+				604052232B4085DF00100DC5 /* XCRemoteSwiftPackageReference "google-api-swift-client" */,
+				604052282B4088AF00100DC5 /* XCRemoteSwiftPackageReference "google-api-objectivec-client-for-rest" */,
 			);
 			productRefGroup = 607283C52B3875D7002B5DAF /* Products */;
 			projectDirPath = "";
@@ -274,6 +287,7 @@
 			files = (
 				607283D52B3875D9002B5DAF /* Preview Assets.xcassets in Resources */,
 				60DFF5E42B3EB44C004E098C /* AmazonPollyCFN.yaml in Resources */,
+				6040521C2B40414E00100DC5 /* README.md in Resources */,
 				607283D12B3875D9002B5DAF /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -286,12 +300,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				607283EF2B39BEDE002B5DAF /* DocumentReaderView.swift in Sources */,
+				604052AA2B42DFB400100DC5 /* SplashView.swift in Sources */,
 				6072840A2B3AE68A002B5DAF /* AmazonPollySynthesizer.swift in Sources */,
 				607283C82B3875D7002B5DAF /* AetherVoiceApp.swift in Sources */,
 				60DFF5E92B3EF375004E098C /* KeychainWrapper.swift in Sources */,
 				607283CA2B3875D7002B5DAF /* Persistence.swift in Sources */,
 				604A91482B3CB36200836DAF /* RuntimeError.swift in Sources */,
 				60DFF5E72B3EECB7004E098C /* SettingsView.swift in Sources */,
+				604052202B405DC700100DC5 /* AWSSettingsView.swift in Sources */,
+				604052222B405DF200100DC5 /* GCPSettingsView.swift in Sources */,
 				607283F52B39BF05002B5DAF /* DocumentReaderViewModel.swift in Sources */,
 				607283EB2B39BEB2002B5DAF /* AppDocument.swift in Sources */,
 				607283FE2B3A0CFD002B5DAF /* FilePickerUtility.swift in Sources */,
@@ -532,6 +549,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		604052232B4085DF00100DC5 /* XCRemoteSwiftPackageReference "google-api-swift-client" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleapis/google-api-swift-client.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		604052282B4088AF00100DC5 /* XCRemoteSwiftPackageReference "google-api-objectivec-client-for-rest" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/google-api-objectivec-client-for-rest.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		604A8E922B3C563D00836DAF /* XCRemoteSwiftPackageReference "aws-sdk-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/awslabs/aws-sdk-swift";
@@ -543,20 +576,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		604052A72B40892B00100DC5 /* GoogleAPIClientForREST_Texttospeech */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 604052282B4088AF00100DC5 /* XCRemoteSwiftPackageReference "google-api-objectivec-client-for-rest" */;
+			productName = GoogleAPIClientForREST_Texttospeech;
+		};
 		604A8F312B3C563F00836DAF /* AWSCognitoIdentity */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 604A8E922B3C563D00836DAF /* XCRemoteSwiftPackageReference "aws-sdk-swift" */;
 			productName = AWSCognitoIdentity;
-		};
-		604A8F332B3C563F00836DAF /* AWSCognitoIdentityProvider */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 604A8E922B3C563D00836DAF /* XCRemoteSwiftPackageReference "aws-sdk-swift" */;
-			productName = AWSCognitoIdentityProvider;
-		};
-		604A8F352B3C563F00836DAF /* AWSCognitoSync */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 604A8E922B3C563D00836DAF /* XCRemoteSwiftPackageReference "aws-sdk-swift" */;
-			productName = AWSCognitoSync;
 		};
 		604A90832B3C564700836DAF /* AWSPolly */ = {
 			isa = XCSwiftPackageProductDependency;

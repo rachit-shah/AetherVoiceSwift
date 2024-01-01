@@ -4,67 +4,93 @@ import NaturalLanguage
 
 @MainActor
 class DocumentReaderViewModel: ObservableObject, SpeechSynthesizerDelegate {
-    enum TTSService: String {
-        case local, amazonPolly, googleCloud, microsoftAzure
-    }
 
     @Published var currentSentenceIndex = 0
     @Published var isSpeaking = false
     @Published var errorMessage: String?
     
-    @Published var selectedLanguage: String = "en-US" {
+    @Published var selectedTTSService: TTSService {
         didSet {
-            Task {
-                stopReadingText()
-                await updateVoicesForSelectedLanguage()
-            }
+            stopReadingText()
+            updateSelectedSynthesizer()
         }
     }
-    @Published var selectedVoice: String = "com.apple.voice.compact.en-US.Samantha" {
+    @Published var selectedEngine: String = defaultTTSSettings().1 {
+        didSet {
+            stopReadingText()
+            updateVoicesForSelectedEngine()
+        }
+    }
+    @Published var selectedLanguage: String = defaultTTSSettings().2 {
+        didSet {
+            stopReadingText()
+            updateVoicesForSelectedLanguage()
+        }
+    }
+    @Published var selectedVoice: String = defaultTTSSettings().3 {
         didSet {
             stopReadingText()
             updateSynthesizerVoice()
         }
     }
-    @Published var availableLanguages: [String] = ["en-US"]
-    @Published var availableVoices: [String] = ["com.apple.voice.compact.en-US.Samantha"]
-    @Published var availableEngines: [String] = ["standard"]
-    
-    @Published var selectedTTSService: TTSService = .local {
-        didSet {
-            Task {
-                stopReadingText()
-                try await updateSelectedSynthesizer()
-            }
-        }
-    }
-    
-    @Published var selectedEngine: String = "standard" {
-        didSet {
-            Task {
-                stopReadingText()
-                await updateVoicesForSelectedEngine()
-            }
-        }
-    }
+    @Published var availableSynthesizers: [TTSService]
+    @Published var availableLanguages: [String] = []
+    @Published var availableVoices: [String] = []
+    @Published var availableEngines: [String] = []
 
     let document: AppDocument
     var sentences: [String]
+    var synthesizerDict: [TTSService: SpeechSynthesizerProtocol]
     var speechSynthesizer: SpeechSynthesizerProtocol
     
-    init(document: AppDocument) async throws {
+    init(document: AppDocument, synthesizerDict: [TTSService: SpeechSynthesizerProtocol]) {
         self.document = document
+        self.synthesizerDict = synthesizerDict
         self.sentences = DocumentReaderViewModel.splitIntoSentences(text: document.content)
-        self.speechSynthesizer = LocalSpeechSynthesizer(sentences: self.sentences, delegate: nil)
-        self.speechSynthesizer = LocalSpeechSynthesizer(sentences: self.sentences, delegate: self)
-        loadTTSSettings()
-        try await updateSelectedSynthesizer()
+        self.availableSynthesizers = self.synthesizerDict.map { $0.key }
+        let loadedSettings = DocumentReaderViewModel.loadTTSSettings()
+        print("LOADED Settings: \(loadedSettings)")
+        if loadedSettings.0 != nil && loadedSettings.1 != nil && loadedSettings.2 != nil && loadedSettings.3 != nil {
+            self.selectedTTSService = loadedSettings.0!
+            self.selectedEngine = loadedSettings.1!
+            self.selectedLanguage = loadedSettings.2!
+            self.selectedVoice = loadedSettings.3!
+            self.speechSynthesizer = self.synthesizerDict[loadedSettings.0!]!
+            self.speechSynthesizer.setDelegate(delegate: self)
+            self.availableEngines = self.speechSynthesizer.supportedEngines()
+            self.speechSynthesizer.setEngine(engine: selectedEngine)
+            self.availableLanguages = self.speechSynthesizer.supportedLanguages()
+            self.speechSynthesizer.setLanguage(language: selectedLanguage)
+            self.availableVoices = self.speechSynthesizer.supportedVoices()
+            self.speechSynthesizer.setVoice(voice: selectedVoice)
+            print("Preloaded previous settings")
+        } else {
+            (selectedTTSService, selectedEngine, selectedLanguage, selectedVoice) = DocumentReaderViewModel.defaultTTSSettings()
+            self.speechSynthesizer = self.synthesizerDict[.local]!
+            self.speechSynthesizer.setDelegate(delegate: self)
+            self.availableEngines = self.speechSynthesizer.supportedEngines()
+            self.speechSynthesizer.setEngine(engine: selectedEngine)
+            self.availableLanguages = self.speechSynthesizer.supportedLanguages()
+            self.speechSynthesizer.setLanguage(language: selectedLanguage)
+            self.availableVoices = self.speechSynthesizer.supportedVoices()
+            self.speechSynthesizer.setVoice(voice: selectedVoice)
+            saveTTSSettings()
+        }
+        if validateSelectedOptions() == false {
+            print("Settings not valid: \(selectedTTSService) \(selectedEngine) \(selectedLanguage) \(selectedVoice)")
+            (self.selectedTTSService, self.selectedEngine, self.selectedLanguage, self.selectedVoice) = DocumentReaderViewModel.defaultTTSSettings()
+            updateSelectedSynthesizer()
+        }
     }
 
     func startReading() async {
         guard currentSentenceIndex < sentences.count else { return }
         let sentenceToRead = sentences[currentSentenceIndex]
-        await speechSynthesizer.speak(text: sentenceToRead)
+        do {
+            try await speechSynthesizer.speak(text: sentenceToRead)
+        } catch {
+            didEncounterError(error)
+        }
     }
 
     func stopReadingText() {
@@ -104,45 +130,35 @@ class DocumentReaderViewModel: ObservableObject, SpeechSynthesizerDelegate {
         }
     }
 
-    private func updateSelectedSynthesizer() async throws {
-        switch selectedTTSService {
-        case .local:
-            speechSynthesizer = LocalSpeechSynthesizer(sentences: sentences, delegate: self)
-        case .amazonPolly:
-            // Initialize Amazon Polly Speech Synthesizer
-            speechSynthesizer = try AmazonPollySynthesizer(sentences: sentences, delegate: self)
-        case .googleCloud:
-            // Initialize Google Cloud Speech Synthesizer
-            speechSynthesizer = LocalSpeechSynthesizer(sentences: sentences, delegate: self)
-        case .microsoftAzure:
-            // Initialize Microsoft Azure Speech Synthesizer
-            speechSynthesizer = LocalSpeechSynthesizer(sentences: sentences, delegate: self)
-        }
-        availableEngines = speechSynthesizer.supportedEngines()
-        availableLanguages = await speechSynthesizer.supportedLanguages()
-        availableVoices = await speechSynthesizer.supportedVoices()
-        selectedLanguage = speechSynthesizer.selectedLanguageCode
-        selectedVoice = speechSynthesizer.selectedVoiceIdentifier
-        speechSynthesizer.setLanguage(language: selectedLanguage)
+    private func updateSelectedSynthesizer() {
+        self.speechSynthesizer = self.synthesizerDict[selectedTTSService]!
+        self.speechSynthesizer.setDelegate(delegate: self)
+        self.availableEngines = self.speechSynthesizer.supportedEngines()
+        self.selectedEngine = self.availableEngines.first ?? ""
+        self.speechSynthesizer.setEngine(engine: selectedEngine)
+        self.availableLanguages = self.speechSynthesizer.supportedLanguages()
+        self.selectedLanguage = self.availableLanguages.first ?? ""
+        self.speechSynthesizer.setLanguage(language: selectedLanguage)
+        self.availableVoices = self.speechSynthesizer.supportedVoices()
+        self.selectedVoice = self.availableVoices.first ?? ""
+        self.speechSynthesizer.setVoice(voice: selectedVoice)
+        saveTTSSettings()
+    }
+    
+    private func updateVoicesForSelectedEngine() {
+        availableLanguages = speechSynthesizer.supportedLanguages()
+        selectedLanguage = availableLanguages.first ?? ""
+        speechSynthesizer.setEngine(engine: selectedEngine)
+        availableVoices = speechSynthesizer.supportedVoices()
+        selectedVoice = availableVoices.first ?? ""
         speechSynthesizer.setVoice(voice: selectedVoice)
         saveTTSSettings()
     }
     
-    private func updateVoicesForSelectedEngine() async {
-        availableLanguages = await speechSynthesizer.supportedLanguages()
-        speechSynthesizer.setEngine(engine: selectedEngine)
+    private func updateVoicesForSelectedLanguage() {
         speechSynthesizer.setLanguage(language: selectedLanguage)
-        availableVoices = await speechSynthesizer.supportedVoices()
-        selectedVoice = availableVoices.first ?? "Default"
-        speechSynthesizer.setVoice(voice: selectedVoice)
-        saveTTSSettings()
-    }
-    
-    private func updateVoicesForSelectedLanguage() async {
-        speechSynthesizer.setEngine(engine: selectedEngine)
-        speechSynthesizer.setLanguage(language: selectedLanguage)
-        availableVoices = await speechSynthesizer.supportedVoices()
-        selectedVoice = availableVoices.first ?? "Default"
+        availableVoices = speechSynthesizer.supportedVoices()
+        selectedVoice = availableVoices.first ?? ""
         speechSynthesizer.setVoice(voice: selectedVoice)
         saveTTSSettings()
     }
@@ -198,10 +214,10 @@ class DocumentReaderViewModel: ObservableObject, SpeechSynthesizerDelegate {
         }
     }
     
-    nonisolated func didEncounterError(_ error: SynthesizerError) {
+    nonisolated func didEncounterError(_ error: Error) {
         // Handle different error cases
         DispatchQueue.main.async {
-            self.errorMessage = error.errorDescription
+            self.errorMessage = error.localizedDescription
         }
     }
     
@@ -212,14 +228,35 @@ class DocumentReaderViewModel: ObservableObject, SpeechSynthesizerDelegate {
         UserDefaults.standard.set(selectedVoice, forKey: "selectedVoice")
     }
 
-    func loadTTSSettings() {
+    static func loadTTSSettings() -> (TTSService?, String?, String?, String?) {
+        let loadedTTSService: TTSService?, loadedEngine: String?, loadedLanguage: String?, loadedVoice: String?
         if let serviceRawValue = UserDefaults.standard.string(forKey: "selectedTTSService"),
            let service = TTSService(rawValue: serviceRawValue) {
-            selectedTTSService = service
+            loadedTTSService = service
+        } else {
+            loadedTTSService = nil
         }
-        selectedEngine = UserDefaults.standard.string(forKey: "selectedEngine") ?? "standard"
-        selectedLanguage = UserDefaults.standard.string(forKey: "selectedLanguage") ?? "en-US"
-        selectedVoice = UserDefaults.standard.string(forKey: "selectedVoice") ?? "Joanna"
+        loadedEngine = UserDefaults.standard.string(forKey: "selectedEngine")
+        loadedLanguage = UserDefaults.standard.string(forKey: "selectedLanguage")
+        loadedVoice = UserDefaults.standard.string(forKey: "selectedVoice")
+        return (loadedTTSService, loadedEngine, loadedLanguage, loadedVoice)
+    }
+    
+    func validateSelectedOptions() -> Bool {
+        print("available synt: \(availableSynthesizers). Selected: \(selectedTTSService)")
+        print("available eng: \(availableEngines). Selected: \(selectedEngine)")
+        print("available lang: \(availableLanguages). Selected: \(selectedLanguage)")
+        print("available voice: \(availableVoices). Selected: \(selectedVoice)")
+        return [
+            availableSynthesizers.contains(selectedTTSService),
+            availableEngines.contains(selectedEngine),
+            availableLanguages.contains(selectedLanguage),
+            availableVoices.contains(selectedVoice),
+        ].allSatisfy { $0 == true }
+    }
+    
+    static func defaultTTSSettings() -> (TTSService, String, String, String) {
+        return (.local, "standard", "en-US", "com.apple.voice.compact.en-US.Samantha")
     }
 }
 

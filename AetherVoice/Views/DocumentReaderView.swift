@@ -135,28 +135,18 @@ struct TTSConfigView: View {
     var body: some View {
         Form {
             Picker("TTS", selection: $viewModel.selectedTTSService) {
-                Text("Local").tag(DocumentReaderViewModel.TTSService.local)
-                Text("Polly").tag(DocumentReaderViewModel.TTSService.amazonPolly)
-                Text("GCloud").tag(DocumentReaderViewModel.TTSService.googleCloud)
-                Text("Azure").tag(DocumentReaderViewModel.TTSService.microsoftAzure)
-            }
-            .pickerStyle(MenuPickerStyle())
-            .onChange(of: viewModel.selectedTTSService) { _, _ in
-                viewModel.selectedEngine = "standard"
-                viewModel.selectedLanguage = "en-US"
-                viewModel.selectedVoice = ""
-            }
-            
-            Picker("Engine", selection: $viewModel.selectedEngine) {
-                ForEach(viewModel.availableEngines, id: \.self) { language in
-                    Text(language).tag(language)
+                ForEach(viewModel.availableSynthesizers, id: \.self) { service in
+                    Text(service.rawValue).tag(service)
                 }
             }
             .pickerStyle(MenuPickerStyle())
-            .onChange(of: viewModel.selectedEngine) { _, _ in
-                viewModel.selectedLanguage = "en-US"
-                viewModel.selectedVoice = ""
+            
+            Picker("Engine", selection: $viewModel.selectedEngine) {
+                ForEach(viewModel.availableEngines, id: \.self) { engine in
+                    Text(engine).tag(engine)
+                }
             }
+            .pickerStyle(MenuPickerStyle())
             
             Picker("Lang", selection: $viewModel.selectedLanguage) {
                 ForEach(viewModel.availableLanguages, id: \.self) { language in
@@ -164,9 +154,6 @@ struct TTSConfigView: View {
                 }
             }
             .pickerStyle(MenuPickerStyle())
-            .onChange(of: viewModel.selectedEngine) { _, _ in
-                viewModel.selectedVoice = ""
-            }
 
             Picker("Voice", selection: $viewModel.selectedVoice) {
                 ForEach(viewModel.availableVoices, id: \.self) { voice in

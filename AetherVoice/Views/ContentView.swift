@@ -32,7 +32,7 @@ struct ContentView: View {
                         }
                         .popover(isPresented: $showingSettings) {
                             SettingsView(listViewModel: viewModel)
-                                .frame(width: 300)
+                                .frame(width: 600, height: 600) // Set your desired size here
                                 .padding()
                         }
                         addButtonmacOS
@@ -93,20 +93,4 @@ struct ContentView: View {
         showingDocumentPicker = true
     }
     #endif
-}
-
-// Intermediate view to handle async initialization
-struct IntermediateListView: View {
-    @State var viewModel: DocumentListViewModel?
-
-    var body: some View {
-        if let viewModel = viewModel {
-            ContentView(viewModel: viewModel)
-        } else {
-            Text("Loading...")
-                .task {
-                    viewModel = await DocumentListViewModel()
-                }
-        }
-    }
 }

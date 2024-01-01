@@ -1,18 +1,32 @@
-//
-//  SplashView.swift
-//  AetherVoice
-//
-//  Created by Rachit Shah on 1/1/24.
-//
-
 import SwiftUI
 
 struct SplashView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+    @State var viewModel: DocumentListViewModel?
+    @Environment(\.colorScheme) var colorScheme
 
-#Preview {
-    SplashView()
+    var body: some View {
+        if let viewModel = viewModel {
+            ContentView(viewModel: viewModel)
+        } else {
+            VStack {
+                // Use different images based on the color scheme
+                if colorScheme == .dark {
+                    Image("SplashDark") // Your white icon for dark mode
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 300, height: 300)
+                } else {
+                    Image("Splash") // Your black icon for light mode
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 300, height: 300)
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(colorScheme == .dark ? Color.black : Color.white)
+            .task {
+                viewModel = await DocumentListViewModel()
+            }
+        }
+    }
 }

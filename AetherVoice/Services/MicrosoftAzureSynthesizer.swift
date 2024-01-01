@@ -1,42 +1,55 @@
 import AVFoundation
 
 class MicrosoftAzureSynthesizer: NSObject, SpeechSynthesizerProtocol, AVSpeechSynthesizerDelegate {
-    weak var delegate: SpeechSynthesizerDelegate?
-    private let synthesizer = AVSpeechSynthesizer()
-    private var sentences: [String]
-    private var currentSpeakingRange: NSRange = NSRange()
-    internal var selectedVoiceIdentifier: String = "com.apple.voice.compact.en-US.Samantha"
-    internal var selectedLanguageCode: String = "en-US"
-    internal var selectedEngine: String = "standard"
     
-    init(sentences: [String], delegate: SpeechSynthesizerDelegate?) {
-        self.sentences = sentences
-        self.delegate = delegate
+    internal var selectedEngine: String?
+    internal var selectedVoiceIdentifier: String?
+    internal var selectedLanguageCode: String?
+    weak var delegate: SpeechSynthesizerDelegate?
+    
+    private let synthesizer = AVSpeechSynthesizer()
+    private var voices: [AVSpeechSynthesisVoice]
+    
+    override init() {
+        self.voices = []
         super.init()
+        self.voices = self.listVoices()
         synthesizer.delegate = self
     }
+    
+    func setDelegate(delegate: SpeechSynthesizerDelegate) {
+        self.delegate = delegate
+    }
 
-    func setEngine(engine: String) {
+    func setEngine(engine: String?) {
         selectedEngine = engine
     }
     
-    func setLanguage(language: String) {
+    func setLanguage(language: String?) {
         selectedLanguageCode = language
     }
 
-    func setVoice(voice: String) {
+    func setVoice(voice: String?) {
         selectedVoiceIdentifier = voice
     }
-
-    func speak(text: String) {
+    
+    func speak(text: String) throws {
+        if selectedEngine == nil || selectedVoiceIdentifier == nil {
+            throw SynthesizerError.userError("Need to select engine, language and/or voice in the reader settings.")
+        }
         let utterance = AVSpeechUtterance(string: text)
-        utterance.voice = AVSpeechSynthesisVoice(identifier: selectedVoiceIdentifier)
+        utterance.voice = AVSpeechSynthesisVoice(identifier: selectedVoiceIdentifier!)
         synthesizer.speak(utterance)
-        MicrosoftAzureSynthesizer.saveCharactersProcessed(count: text.count, engine: selectedEngine)
+        print("Speaking text Local: \(text).")
+        LocalSpeechSynthesizer.saveCharactersProcessed(count: text.count, engine: selectedEngine!)
     }
 
     func stopSpeaking() {
         synthesizer.stopSpeaking(at: .immediate)
+    }
+    
+    private func listVoices() -> [AVSpeechSynthesisVoice] {
+        return AVSpeechSynthesisVoice.speechVoices()
     }
     
     func supportedEngines() -> [String] {
@@ -44,14 +57,16 @@ class MicrosoftAzureSynthesizer: NSObject, SpeechSynthesizerProtocol, AVSpeechSy
     }
 
     func supportedLanguages() -> [String] {
-        let allLanguages = AVSpeechSynthesisVoice.speechVoices().map { $0.language }
+        let allLanguages = self.voices.map { $0.language }
         let uniqueLanguages = Set(allLanguages)
         return Array(uniqueLanguages).sorted()  // Convert back to sorted array
     }
 
     func supportedVoices() -> [String] {
-        // Filter the voices to only those that match the selected language
-        return AVSpeechSynthesisVoice.speechVoices()
+        if selectedLanguageCode == nil {
+            return []
+        }
+        return self.voices
                .filter { $0.language == selectedLanguageCode }
                .map { $0.identifier }
     }

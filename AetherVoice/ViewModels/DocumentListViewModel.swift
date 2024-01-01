@@ -5,10 +5,12 @@ import UniformTypeIdentifiers
 
 class DocumentListViewModel: ObservableObject {
     @Published var documents: [AppDocument] = []
+    var synthesizerDict: [TTSService: SpeechSynthesizerProtocol] = [TTSService: SpeechSynthesizerProtocol]()
     private let persistenceController = PersistenceController.shared
 
-    init() {
+    init() async {
         fetchDocuments()
+        await initializeAllSynthesizers()
     }
     
     func saveDocument(_ appDocument: AppDocument) {
@@ -18,6 +20,56 @@ class DocumentListViewModel: ObservableObject {
 
     func fetchDocuments() {
         documents = persistenceController.fetchDocuments()
+    }
+    
+    func initializeAllSynthesizers() async {
+        var tasks: [Task<(), Never>] = []
+
+        for ttsService in TTSService.allCases {
+            let task = Task {
+                await self.initializeSynthesizer(ttsService: ttsService)
+            }
+            tasks.append(task)
+        }
+
+        // Wait for all tasks to complete
+        for task in tasks {
+            await task.value
+        }
+    }
+    
+    func initializeSynthesizer(ttsService: TTSService) async {
+        let speechSynthesizer: SpeechSynthesizerProtocol
+        switch ttsService {
+            case .local:
+                speechSynthesizer = LocalSpeechSynthesizer()
+                self.synthesizerDict[ttsService] = speechSynthesizer
+            case .amazonPolly:
+                do {
+                    guard let cognitoIdentityId = AmazonPollySynthesizer.getCognitoIdentityFromKeychain()
+                    else {
+                        throw SynthesizerError.userError("Need to set Identity pool id in the AWS configuration to use Polly synthesizer. Change to a different synthesizer in reader settings or set the appropriate config in the Settings menu.")
+                    }
+                    speechSynthesizer = try await AmazonPollySynthesizer(cognitoIdentityId: cognitoIdentityId)
+                    self.synthesizerDict[ttsService] = speechSynthesizer
+                } catch {
+                    print("Error initializing AmazonPollySynthesizer: \(error)")
+                }
+            case .googleCloud:
+                do {
+                    guard let gcpApiKey = GoogleCloudSynthesizer.getGcpApiKeyFromKeychain()
+                    else {
+                        throw SynthesizerError.userError("Need to set GCP Api Key in the GCP configuration to use Google Cloud synthesizer. Change to a different synthesizer in reader settings or set the appropriate config in the Settings menu.")
+                    }
+                    speechSynthesizer = try GoogleCloudSynthesizer(gcpApiKey: gcpApiKey)
+                    self.synthesizerDict[ttsService] = speechSynthesizer
+                } catch {
+                    print("Error initializing GoogleCloudSynthesizer: \(error)")
+                }
+            case .microsoftAzure:
+                speechSynthesizer = MicrosoftAzureSynthesizer()
+                self.synthesizerDict[ttsService] = speechSynthesizer
+        }
     }
     
     #if os(macOS)

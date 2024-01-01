@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var viewModel = DocumentListViewModel()
+    @ObservedObject var viewModel: DocumentListViewModel
     @State private var showingSettings = false
     #if os(iOS)
     @State private var showingActionSheet = false
@@ -20,7 +20,7 @@ struct ContentView: View {
                     addButtoniOS
                 })
                 .sheet(isPresented: $showingSettings) {
-                    SettingsView()
+                    SettingsView(listViewModel: viewModel)
                 }
                 #elseif os(macOS)
                 .toolbar {
@@ -31,7 +31,7 @@ struct ContentView: View {
                             Label("Settings", systemImage: "gear")
                         }
                         .popover(isPresented: $showingSettings) {
-                            SettingsView()
+                            SettingsView(listViewModel: viewModel)
                                 .frame(width: 300)
                                 .padding()
                         }
@@ -95,9 +95,18 @@ struct ContentView: View {
     #endif
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-            .environmentObject(DocumentListViewModel())
+// Intermediate view to handle async initialization
+struct IntermediateListView: View {
+    @State var viewModel: DocumentListViewModel?
+
+    var body: some View {
+        if let viewModel = viewModel {
+            ContentView(viewModel: viewModel)
+        } else {
+            Text("Loading...")
+                .task {
+                    viewModel = await DocumentListViewModel()
+                }
+        }
     }
 }

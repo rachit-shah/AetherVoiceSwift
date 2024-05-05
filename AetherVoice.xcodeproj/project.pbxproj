@@ -39,6 +39,7 @@
 		607284092B3AE68A002B5DAF /* MicrosoftAzureSynthesizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607284062B3AE68A002B5DAF /* MicrosoftAzureSynthesizer.swift */; };
 		6072840A2B3AE68A002B5DAF /* AmazonPollySynthesizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607284072B3AE68A002B5DAF /* AmazonPollySynthesizer.swift */; };
 		60CAE3782BE7848F00B1E884 /* DocumentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CAE3772BE7848F00B1E884 /* DocumentData.swift */; };
+		60CAE37B2BE8072400B1E884 /* AetherVoiceFree_Azure_template.json in Resources */ = {isa = PBXBuildFile; fileRef = 60CAE37A2BE8072400B1E884 /* AetherVoiceFree_Azure_template.json */; };
 		60DFF5E42B3EB44C004E098C /* AmazonPollyCFN.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 60DFF5E32B3EB44C004E098C /* AmazonPollyCFN.yaml */; };
 		60DFF5E72B3EECB7004E098C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DFF5E62B3EECB7004E098C /* SettingsView.swift */; };
 		60DFF5E92B3EF375004E098C /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DFF5E82B3EF375004E098C /* KeychainWrapper.swift */; };
@@ -77,6 +78,7 @@
 		607284072B3AE68A002B5DAF /* AmazonPollySynthesizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonPollySynthesizer.swift; sourceTree = "<group>"; };
 		60CAE3772BE7848F00B1E884 /* DocumentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentData.swift; sourceTree = "<group>"; };
 		60CAE3792BE7E85D00B1E884 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		60CAE37A2BE8072400B1E884 /* AetherVoiceFree_Azure_template.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = AetherVoiceFree_Azure_template.json; path = AetherVoice/AetherVoiceFree_Azure_template.json; sourceTree = SOURCE_ROOT; };
 		60DFF5E32B3EB44C004E098C /* AmazonPollyCFN.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = AmazonPollyCFN.yaml; sourceTree = "<group>"; };
 		60DFF5E62B3EECB7004E098C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		60DFF5E82B3EF375004E098C /* KeychainWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				60DFF5E32B3EB44C004E098C /* AmazonPollyCFN.yaml */,
+				60CAE37A2BE8072400B1E884 /* AetherVoiceFree_Azure_template.json */,
 			);
 			path = Dist;
 			sourceTree = "<group>";
@@ -297,6 +300,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				607283D52B3875D9002B5DAF /* Preview Assets.xcassets in Resources */,
+				60CAE37B2BE8072400B1E884 /* AetherVoiceFree_Azure_template.json in Resources */,
 				60DFF5E42B3EB44C004E098C /* AmazonPollyCFN.yaml in Resources */,
 				6040521C2B40414E00100DC5 /* README.md in Resources */,
 				607283D12B3875D9002B5DAF /* Assets.xcassets in Resources */,

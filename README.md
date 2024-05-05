@@ -49,7 +49,26 @@ Just build the project in Xcode, sign it for local development and install it in
 [Source in GCP Docs - Create API Keys](https://cloud.google.com/docs/authentication/api-keys#create)
 [Source in GCP Docs - Restrict API key usage in iOS apps](https://cloud.google.com/docs/authentication/api-keys#ios)
 
-### Provide API key in AetherVoice Settings
+### Step 3: Provide API key in AetherVoice Settings
 Provide the generated API key in AWS configuration in the Settings -> GCP Configuration of the AetherVoice app. 
 
 (Note: the API key acts like a password to access your GCP account's Text-to-Speech API. Don't share it with anyone. The value will be securely stored in your keychain upon entering it)
+
+
+## Setup Microsoft Azure
+
+### Step 0: Setup Azure account
+1. Sign up for Azure or use an existing account: https://azure.microsoft.com/en-us/free/open-source
+2. Sign in to your [Azure Portal and go to deploy custom template](https://portal.azure.com/#create/Microsoft.Template).
+3. Click "Build your own template in the editor" and then load the [AetherVoice/Dist/AetherVoiceFree_Azure_template.json](AetherVoice/Dist/AetherVoiceFree_Azure_template.json) file. Feel free to change the region if you want. The available voices change based on the region selected. Also, the template is using the free-tier subscription but feel free to change to a standard or pay-as-you-go subscription if you want.
+4. Save -> Create new or use existing resource group. -> Review + Create -> Create
+5. Wait for deployment to finish and then "Go to resource"
+6. Under "Keys and endpoint" section of the resource, note down "Key 1" or "Key 2" and the region.
+
+[Source in Azure Docs - Deploy templates](https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/deploy-portal)
+[Source in Azure Docs - TTS Pricing](https://azure.microsoft.com/en-us/pricing/details/cognitive-services/speech-services/)
+
+### Step 1: Provide Azure Speech Resource Keys in AetherVoice Settings
+Provide the generated Resource key and Azure Region in the Settings -> Azure Configuration of the AetherVoice app. 
+
+(Note: the API key acts like a password to access your Azure account's Text-to-Speech API. Don't share it with anyone. The value will be securely stored in your keychain upon entering it)

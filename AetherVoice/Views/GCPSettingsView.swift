@@ -20,7 +20,7 @@ struct GCPSettingsView: View {
                 Text("The GCP API Key acts like a password to access your GCP account's Text-to-Speech API. Don't share it with anyone. The value will be securely stored in your keychain upon entering it.")
                     .font(.caption)
                     .foregroundColor(.gray)
-                Link("See Setup Instructions", destination: URL(string: "https://github.com/rachit-shah/AetherVoice#setup-google-cloud")!)
+                Link("See Setup Instructions", destination: URL(string: "https://github.com/rachit-shah/AetherVoiceSwift#setup-google-cloud")!)
                                     .font(.caption)
                                     .foregroundColor(.blue)
                 if isEditing {

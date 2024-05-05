@@ -17,7 +17,7 @@ struct AWSSettingsView: View {
                 Text("The Identity Pool ID acts like a password to access your AWS account's Polly resources. Don't share it with anyone. The value will be securely stored in your keychain upon entering it.")
                     .font(.caption)
                     .foregroundColor(.gray)
-                Link("See Setup Instructions", destination: URL(string: "https://github.com/rachit-shah/AetherVoice#setup-amazon-polly")!)
+                Link("See Setup Instructions", destination: URL(string: "https://github.com/rachit-shah/AetherVoiceSwift#setup-amazon-polly")!)
                                     .font(.caption)
                                     .foregroundColor(.blue)
                 if isEditing {

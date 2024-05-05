@@ -7,6 +7,9 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             Form {
+                Section(header: Text("Azure Configuration")) {
+                    NavigationLink("Setup Microsoft Azure", destination: AzureSettingsView(listViewModel: listViewModel))
+                }
                 Section(header: Text("AWS Configuration")) {
                     NavigationLink("Setup Amazon Polly", destination: AWSSettingsView(listViewModel: listViewModel))
                 }

@@ -67,8 +67,16 @@ class DocumentListViewModel: ObservableObject {
                     print("Error initializing GoogleCloudSynthesizer: \(error)")
                 }
             case .microsoftAzure:
-                speechSynthesizer = MicrosoftAzureSynthesizer()
-                self.synthesizerDict[ttsService] = speechSynthesizer
+                do {
+                    let (azureRegion, azureApiKey)  = MicrosoftAzureSynthesizer.getAzureSettingsFromKeychain()
+                    if (azureRegion == nil || azureApiKey == nil) {
+                        throw SynthesizerError.userError("Need to set Azure Resource Key in the Azure configuration to use Microsoft Azure synthesizer. Change to a different synthesizer in reader settings or set the appropriate config in the Settings menu.")
+                    }
+                    speechSynthesizer = try MicrosoftAzureSynthesizer(azureRegion: azureRegion!, azureApiKey: azureApiKey!)
+                    self.synthesizerDict[ttsService] = speechSynthesizer
+                } catch {
+                    print("Error initializing MicrosoftAzureSynthesizer: \(error)")
+                }
         }
     }
     

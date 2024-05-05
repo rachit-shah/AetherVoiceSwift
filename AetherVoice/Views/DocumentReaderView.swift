@@ -16,22 +16,21 @@ struct DocumentReaderView: View {
                             .foregroundColor(index == viewModel.currentSentenceIndex ? .blue : .gray)
                             .padding(.bottom, 3)
                             .onTapGesture {
-                                DispatchQueue.main.async {
-                                    startAtMiddle = true
-                                    viewModel.currentSentenceIndex = index
-                                    viewModel.isSpeaking = true
-                                }
+                                print("Tapped sentence \(index)")
+                                startAtMiddle = true
+                                viewModel.currentSentenceIndex = index
+                                viewModel.isSpeaking = true
                             }
                     }
                     .onChange(of: viewModel.currentSentenceIndex) { oldValue, newValue in
                         print("Finished reading \(oldValue), now reading \(newValue)")
-                        if newValue >= viewModel.sentences.count {
-                            DispatchQueue.main.async {
-                                viewModel.currentSentenceIndex = 0
-                                viewModel.isSpeaking = false
-                            }
+                        if oldValue >= viewModel.sentences.count {
+                            print("Reached last sentence. Stopping to read.")
+                            viewModel.currentSentenceIndex = 0
+                            viewModel.isSpeaking = false
                         }
                         if viewModel.isSpeaking {
+                            print("Start reading due to tap or continue reading")
                             Task {
                                 await viewModel.startReading()
                             }
@@ -43,6 +42,7 @@ struct DocumentReaderView: View {
                     .onChange(of: viewModel.isSpeaking) { oldValue, newValue in
                         print("Value was \(oldValue), now \(newValue)")
                         if newValue == true && oldValue == false && startAtMiddle == false {
+                            print("Start reading due to play button")
                             Task {
                                 await viewModel.startReading()
                             }

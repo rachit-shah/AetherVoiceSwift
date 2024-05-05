@@ -16,6 +16,8 @@
 		604A8F322B3C563F00836DAF /* AWSCognitoIdentity in Frameworks */ = {isa = PBXBuildFile; productRef = 604A8F312B3C563F00836DAF /* AWSCognitoIdentity */; };
 		604A90842B3C564700836DAF /* AWSPolly in Frameworks */ = {isa = PBXBuildFile; productRef = 604A90832B3C564700836DAF /* AWSPolly */; };
 		604A91482B3CB36200836DAF /* RuntimeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604A91472B3CB36200836DAF /* RuntimeError.swift */; };
+		605FC1B52BE72C030086987A /* AzureSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605FC1B42BE72C030086987A /* AzureSettingsView.swift */; };
+		605FC1B72BE73D890086987A /* AzureVoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605FC1B62BE73D890086987A /* AzureVoice.swift */; };
 		607283C82B3875D7002B5DAF /* AetherVoiceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607283C72B3875D7002B5DAF /* AetherVoiceApp.swift */; };
 		607283CA2B3875D7002B5DAF /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607283C92B3875D7002B5DAF /* Persistence.swift */; };
 		607283CD2B3875D7002B5DAF /* AetherVoice.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 607283CB2B3875D7002B5DAF /* AetherVoice.xcdatamodeld */; };
@@ -48,6 +50,8 @@
 		604052A92B42DFB400100DC5 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		604052AD2B42EF8400100DC5 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		604A91472B3CB36200836DAF /* RuntimeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeError.swift; sourceTree = "<group>"; };
+		605FC1B42BE72C030086987A /* AzureSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureSettingsView.swift; sourceTree = "<group>"; };
+		605FC1B62BE73D890086987A /* AzureVoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureVoice.swift; sourceTree = "<group>"; };
 		607283C42B3875D7002B5DAF /* AetherVoice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AetherVoice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607283C72B3875D7002B5DAF /* AetherVoiceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AetherVoiceApp.swift; sourceTree = "<group>"; };
 		607283C92B3875D7002B5DAF /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -151,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				607283EA2B39BEB2002B5DAF /* AppDocument.swift */,
+				605FC1B62BE73D890086987A /* AzureVoice.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -166,6 +171,7 @@
 				60DFF5E62B3EECB7004E098C /* SettingsView.swift */,
 				6040521F2B405DC700100DC5 /* AWSSettingsView.swift */,
 				604052212B405DF200100DC5 /* GCPSettingsView.swift */,
+				605FC1B42BE72C030086987A /* AzureSettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -312,8 +318,10 @@
 				607283F52B39BF05002B5DAF /* DocumentReaderViewModel.swift in Sources */,
 				607283EB2B39BEB2002B5DAF /* AppDocument.swift in Sources */,
 				607283FE2B3A0CFD002B5DAF /* FilePickerUtility.swift in Sources */,
+				605FC1B52BE72C030086987A /* AzureSettingsView.swift in Sources */,
 				607283CF2B3875D7002B5DAF /* ContentView.swift in Sources */,
 				607284092B3AE68A002B5DAF /* MicrosoftAzureSynthesizer.swift in Sources */,
+				605FC1B72BE73D890086987A /* AzureVoice.swift in Sources */,
 				607284002B3A1099002B5DAF /* DocumentPickerView.swift in Sources */,
 				607284082B3AE68A002B5DAF /* GoogleCloudSynthesizer.swift in Sources */,
 				607284022B3AD993002B5DAF /* SpeechSynthesizerProtocol.swift in Sources */,

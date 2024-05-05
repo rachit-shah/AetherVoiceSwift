@@ -3,7 +3,7 @@ import AVFoundation
 import NaturalLanguage
 
 @MainActor
-class DocumentReaderViewModel: ObservableObject, SpeechSynthesizerDelegate {
+class DocumentReaderViewModel: ObservableObject {
 
     @Published var currentSentenceIndex = 0
     @Published var isSpeaking = false
@@ -94,39 +94,29 @@ class DocumentReaderViewModel: ObservableObject, SpeechSynthesizerDelegate {
     }
 
     func stopReadingText() {
-        DispatchQueue.main.async {
-            self.isSpeaking = false
-        }
+        self.isSpeaking = false
         speechSynthesizer.stopSpeaking()
     }
 
     func toggleSpeech() {
         if self.isSpeaking == true {
-            DispatchQueue.main.async {
-                self.isSpeaking = false
-            }
-        } else {
-            DispatchQueue.main.async {
-                self.isSpeaking = true
-            }
-        }
-    }
-
-    func moveToPreviousSentence() {
-        DispatchQueue.main.async {
             self.isSpeaking = false
-            self.currentSentenceIndex = max(self.currentSentenceIndex - 1, 0)
+        } else {
             self.isSpeaking = true
         }
     }
 
+    func moveToPreviousSentence() {
+        self.isSpeaking = false
+        self.currentSentenceIndex = max(self.currentSentenceIndex - 1, 0)
+        self.isSpeaking = true
+    }
+
     func moveToNextSentence() {
         if currentSentenceIndex < sentences.count - 1 {
-            DispatchQueue.main.async {
-                self.isSpeaking = false
-                self.currentSentenceIndex += 1
-                self.isSpeaking = true
-            }
+            self.isSpeaking = false
+            self.currentSentenceIndex += 1
+            self.isSpeaking = true
         }
     }
 
@@ -207,20 +197,6 @@ class DocumentReaderViewModel: ObservableObject, SpeechSynthesizerDelegate {
         return sentences.filter { !$0.isEmpty }
     }
     
-    nonisolated func didFinishSpeaking() {
-        DispatchQueue.main.async {
-            print("Finished speaking \(self.currentSentenceIndex)")
-            self.currentSentenceIndex += 1
-        }
-    }
-    
-    nonisolated func didEncounterError(_ error: Error) {
-        // Handle different error cases
-        DispatchQueue.main.async {
-            self.errorMessage = error.localizedDescription
-        }
-    }
-    
     func saveTTSSettings() {
         UserDefaults.standard.set(selectedTTSService.rawValue, forKey: "selectedTTSService")
         UserDefaults.standard.set(selectedEngine, forKey: "selectedEngine")
@@ -260,3 +236,15 @@ class DocumentReaderViewModel: ObservableObject, SpeechSynthesizerDelegate {
     }
 }
 
+extension DocumentReaderViewModel: SpeechSynthesizerDelegate {
+    func didFinishSpeaking() {
+        print("Finished speaking \(self.currentSentenceIndex)")
+        self.currentSentenceIndex += 1
+        print("Now about to read \(self.currentSentenceIndex)")
+    }
+    
+    func didEncounterError(_ error: Error) {
+        // Handle different error cases
+        self.errorMessage = error.localizedDescription
+    }
+}

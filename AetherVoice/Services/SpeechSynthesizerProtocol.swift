@@ -1,9 +1,12 @@
+import Foundation
+
 protocol SpeechSynthesizerProtocol {
     var selectedVoiceIdentifier: String? { get set }
     var selectedLanguageCode: String? { get set }
     var selectedEngine: String? { get set }
     var delegate: SpeechSynthesizerDelegate? { get set }
-    func speak(text: String) async throws
+    func generateAudioData(text: String) async throws -> Data
+    func speak(text: String, data: Data) async throws
     func stopSpeaking()
     func supportedEngines() -> [String]
     func supportedLanguages() -> [String]

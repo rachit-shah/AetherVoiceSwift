@@ -38,6 +38,7 @@
 		607284082B3AE68A002B5DAF /* GoogleCloudSynthesizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607284052B3AE68A002B5DAF /* GoogleCloudSynthesizer.swift */; };
 		607284092B3AE68A002B5DAF /* MicrosoftAzureSynthesizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607284062B3AE68A002B5DAF /* MicrosoftAzureSynthesizer.swift */; };
 		6072840A2B3AE68A002B5DAF /* AmazonPollySynthesizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607284072B3AE68A002B5DAF /* AmazonPollySynthesizer.swift */; };
+		60CAE3782BE7848F00B1E884 /* DocumentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CAE3772BE7848F00B1E884 /* DocumentData.swift */; };
 		60DFF5E42B3EB44C004E098C /* AmazonPollyCFN.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 60DFF5E32B3EB44C004E098C /* AmazonPollyCFN.yaml */; };
 		60DFF5E72B3EECB7004E098C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DFF5E62B3EECB7004E098C /* SettingsView.swift */; };
 		60DFF5E92B3EF375004E098C /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DFF5E82B3EF375004E098C /* KeychainWrapper.swift */; };
@@ -74,6 +75,7 @@
 		607284052B3AE68A002B5DAF /* GoogleCloudSynthesizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleCloudSynthesizer.swift; sourceTree = "<group>"; };
 		607284062B3AE68A002B5DAF /* MicrosoftAzureSynthesizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MicrosoftAzureSynthesizer.swift; sourceTree = "<group>"; };
 		607284072B3AE68A002B5DAF /* AmazonPollySynthesizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonPollySynthesizer.swift; sourceTree = "<group>"; };
+		60CAE3772BE7848F00B1E884 /* DocumentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentData.swift; sourceTree = "<group>"; };
 		60DFF5E32B3EB44C004E098C /* AmazonPollyCFN.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = AmazonPollyCFN.yaml; sourceTree = "<group>"; };
 		60DFF5E62B3EECB7004E098C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		60DFF5E82B3EF375004E098C /* KeychainWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 			children = (
 				607283EA2B39BEB2002B5DAF /* AppDocument.swift */,
 				605FC1B62BE73D890086987A /* AzureVoice.swift */,
+				60CAE3772BE7848F00B1E884 /* DocumentData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -320,6 +323,7 @@
 				607283FE2B3A0CFD002B5DAF /* FilePickerUtility.swift in Sources */,
 				605FC1B52BE72C030086987A /* AzureSettingsView.swift in Sources */,
 				607283CF2B3875D7002B5DAF /* ContentView.swift in Sources */,
+				60CAE3782BE7848F00B1E884 /* DocumentData.swift in Sources */,
 				607284092B3AE68A002B5DAF /* MicrosoftAzureSynthesizer.swift in Sources */,
 				605FC1B72BE73D890086987A /* AzureVoice.swift in Sources */,
 				607284002B3A1099002B5DAF /* DocumentPickerView.swift in Sources */,

@@ -39,7 +39,7 @@ class DocumentReaderViewModel: ObservableObject {
     @Published var availableEngines: [String] = []
 
     let document: AppDocument
-    var sentences: [String]
+    var sentences: [DocumentData]
     var synthesizerDict: [TTSService: SpeechSynthesizerProtocol]
     var speechSynthesizer: SpeechSynthesizerProtocol
     
@@ -84,11 +84,19 @@ class DocumentReaderViewModel: ObservableObject {
     }
 
     func startReading() async {
+        await generateAudio()
         guard currentSentenceIndex < sentences.count else { return }
         let sentenceToRead = sentences[currentSentenceIndex]
         do {
-            try await speechSynthesizer.speak(text: sentenceToRead)
+            if (selectedTTSService == .local) {
+                try await speechSynthesizer.speak(text: sentenceToRead.text, data: Data())
+            } else if (sentenceToRead.audioData != nil){
+                try await speechSynthesizer.speak(text: sentenceToRead.text, data: sentenceToRead.audioData!)
+            } else {
+                throw SynthesizerError.audioPlaybackError("Sentence audio data not initialized at index \(currentSentenceIndex) : \(sentenceToRead.text)")
+            }
         } catch {
+            print(error)
             didEncounterError(error)
         }
     }
@@ -133,6 +141,7 @@ class DocumentReaderViewModel: ObservableObject {
         self.selectedVoice = self.availableVoices.first ?? ""
         self.speechSynthesizer.setVoice(voice: selectedVoice)
         saveTTSSettings()
+        self.sentences = DocumentReaderViewModel.splitIntoSentences(text: self.document.content)
     }
     
     private func updateVoicesForSelectedEngine() {
@@ -143,6 +152,7 @@ class DocumentReaderViewModel: ObservableObject {
         selectedVoice = availableVoices.first ?? ""
         speechSynthesizer.setVoice(voice: selectedVoice)
         saveTTSSettings()
+        self.sentences = DocumentReaderViewModel.splitIntoSentences(text: self.document.content)
     }
     
     private func updateVoicesForSelectedLanguage() {
@@ -151,14 +161,16 @@ class DocumentReaderViewModel: ObservableObject {
         selectedVoice = availableVoices.first ?? ""
         speechSynthesizer.setVoice(voice: selectedVoice)
         saveTTSSettings()
+        self.sentences = DocumentReaderViewModel.splitIntoSentences(text: self.document.content)
     }
 
     private func updateSynthesizerVoice() {
         speechSynthesizer.setVoice(voice: selectedVoice)
         saveTTSSettings()
+        self.sentences = DocumentReaderViewModel.splitIntoSentences(text: self.document.content)
     }
 
-    static func splitIntoSentences(text: String) -> [String] {
+    static func splitIntoSentences(text: String) -> [DocumentData] {
         var sentences = [String]()
         let cleanedText = text.replacingOccurrences(of: "\n", with: " ")
                              .replacingOccurrences(of: "\r", with: " ")
@@ -194,7 +206,7 @@ class DocumentReaderViewModel: ObservableObject {
             sentences.append(currentSentence.trimmingCharacters(in: .whitespaces))
         }
 
-        return sentences.filter { !$0.isEmpty }
+        return sentences.filter { !$0.isEmpty }.map { DocumentData(text: $0) }
     }
     
     func saveTTSSettings() {
@@ -234,9 +246,34 @@ class DocumentReaderViewModel: ObservableObject {
     static func defaultTTSSettings() -> (TTSService, String, String, String) {
         return (.local, "standard", "en-US", "com.apple.voice.compact.en-US.Samantha")
     }
+    
+    func generateAudio() async {
+        print("Selected TTS Service \(selectedTTSService)")
+        if (selectedTTSService == .local) {
+            return
+        }
+        do {
+            print("Generate Audio. Total sentences \(sentences.count). Current sentence index \(currentSentenceIndex)")
+            if (sentences.count > currentSentenceIndex && sentences[currentSentenceIndex].audioData == nil) {
+                print("Generating Audio \(currentSentenceIndex)")
+                sentences[currentSentenceIndex].audioData = try await speechSynthesizer.generateAudioData(text: sentences[currentSentenceIndex].text)
+                print("Completed Generating Audio \(currentSentenceIndex): \(String(describing: sentences[currentSentenceIndex].audioData))")
+            }
+            if (sentences.count > currentSentenceIndex + 1 && sentences[currentSentenceIndex + 1].audioData == nil) {
+                print("Generating Audio \(currentSentenceIndex + 1)")
+                sentences[currentSentenceIndex + 1].audioData = try await speechSynthesizer.generateAudioData(text: sentences[currentSentenceIndex + 1].text)
+                print("Completed Generating Audio \(currentSentenceIndex + 1): \(String(describing: sentences[currentSentenceIndex + 1].audioData))")
+            }
+        } catch {
+            print(type(of: speechSynthesizer))
+            print(error)
+            didEncounterError(error)
+        }
+    }
 }
 
 extension DocumentReaderViewModel: SpeechSynthesizerDelegate {
+    @MainActor
     func didFinishSpeaking() {
         print("Finished speaking \(self.currentSentenceIndex)")
         self.currentSentenceIndex += 1

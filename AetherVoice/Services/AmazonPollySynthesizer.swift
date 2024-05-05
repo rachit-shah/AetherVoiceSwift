@@ -63,8 +63,8 @@ class AmazonPollySynthesizer: NSObject, SpeechSynthesizerProtocol, AVAudioPlayer
             }
         }
     }
-
-    func speak(text: String) async throws {
+    
+    func generateAudioData(text: String) async throws -> Data {
         if selectedEngine == nil || selectedVoiceIdentifier == nil {
             throw SynthesizerError.userError("Need to select engine, language and/or voice in the reader settings.")
         }
@@ -76,19 +76,33 @@ class AmazonPollySynthesizer: NSObject, SpeechSynthesizerProtocol, AVAudioPlayer
             textType: .text,
             voiceId: PollyClientTypes.VoiceId(rawValue: selectedVoiceIdentifier!)
         )
-        print(input)
-        
+        print("Generating text Polly: \(text)")
         do {
             let synthesizedSpeechResult = try await self.pollyClient.synthesizeSpeech(input: input)
             guard let speech = try await synthesizedSpeechResult.audioStream?.readData()
             else {
                 throw SynthesizerError.synthesizerError("Polly Error: Unable to parse audio data from response")
             }
-            print("Speaking text Polly: \(text). \(speech)")
-            self.audioPlayer = try AVAudioPlayer(data: speech)
+            AmazonPollySynthesizer.saveCharactersProcessed(count: text.count, engine: selectedEngine!)
+            return speech
+        } catch {
+            switch error {
+                case is SynthesizerError:
+                    throw error
+                default:
+                    throw SynthesizerError.synthesizerError("Polly Error: \(error)")
+            }
+        }
+    }
+
+    func speak(text: String, data: Data) throws {
+        if selectedEngine == nil || selectedVoiceIdentifier == nil {
+            throw SynthesizerError.userError("Need to select engine, language and/or voice in the reader settings.")
+        }
+        do {
+            self.audioPlayer = try AVAudioPlayer(data: data)
             self.audioPlayer.delegate = self
             self.audioPlayer.play()
-            AmazonPollySynthesizer.saveCharactersProcessed(count: text.count, engine: selectedEngine!)
         } catch {
             switch error {
                 case is SynthesizerError:

@@ -1,7 +1,7 @@
 import AVFoundation
 
 class LocalSpeechSynthesizer: NSObject, SpeechSynthesizerProtocol, AVSpeechSynthesizerDelegate {
-    
+
     internal var selectedEngine: String?
     internal var selectedVoiceIdentifier: String?
     internal var selectedLanguageCode: String?
@@ -33,7 +33,7 @@ class LocalSpeechSynthesizer: NSObject, SpeechSynthesizerProtocol, AVSpeechSynth
         selectedVoiceIdentifier = voice
     }
 
-    func speak(text: String) throws {
+    func speak(text: String, data: Data) throws {
         if selectedEngine == nil || selectedVoiceIdentifier == nil {
             throw SynthesizerError.userError("Need to select engine, language and/or voice in the reader settings.")
         }
@@ -84,5 +84,9 @@ class LocalSpeechSynthesizer: NSObject, SpeechSynthesizerProtocol, AVSpeechSynth
 
     static func getCharactersProcessed() -> [String:Int] {
         return UserDefaults.standard.dictionary(forKey: "localCharactersProcessed") as? [String: Int] ?? [String: Int]()
+    }
+    
+    func generateAudioData(text: String) async throws -> Data {
+        return Data()
     }
 }

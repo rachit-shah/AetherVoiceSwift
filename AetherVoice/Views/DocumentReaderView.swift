@@ -3,7 +3,7 @@ import SwiftUI
 
 
 struct DocumentReaderView: View {
-    @ObservedObject var viewModel: DocumentReaderViewModel
+    @StateObject var viewModel: DocumentReaderViewModel
     @State private var showingSettings = false
     @State private var startAtMiddle = false
 
@@ -12,7 +12,7 @@ struct DocumentReaderView: View {
             ScrollView {
                 VStack(alignment: .leading) {
                     ForEach(0..<viewModel.sentences.count, id: \.self) { index in
-                        Text(viewModel.sentences[index])
+                        Text(viewModel.sentences[index].text)
                             .foregroundColor(index == viewModel.currentSentenceIndex ? .blue : .gray)
                             .padding(.bottom, 3)
                             .onTapGesture {

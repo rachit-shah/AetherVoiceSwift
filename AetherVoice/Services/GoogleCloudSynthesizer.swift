@@ -32,8 +32,8 @@ class GoogleCloudSynthesizer: NSObject, SpeechSynthesizerProtocol, AVAudioPlayer
             return nil
         }
     }
-
-    func speak(text: String) async throws {
+    
+    func generateAudioData(text: String) async throws -> Data {
         if selectedEngine == nil || selectedVoiceIdentifier == nil || selectedLanguageCode == nil {
             throw SynthesizerError.userError("Need to select engine, language and/or voice in the reader settings.")
         }
@@ -51,32 +51,48 @@ class GoogleCloudSynthesizer: NSObject, SpeechSynthesizerProtocol, AVAudioPlayer
         request.input = input
         request.voice = voice
         request.audioConfig = audioConfig
-        print(request)
+        print("Speaking text GCP: \(text)")
         let query = GTLRTexttospeechQuery_TextSynthesize.query(withObject: request)
         var speakError: Error?
+        var audioData: Data?
         self.gcpTtsClient.executeQuery(query) { (ticket, response, err) in
-            do {
-                if let err = err {
-                    print("Failed to speak using GCP: \(err). \(ticket)")
-                    speakError = err
-                }
-                
-                if let response = response as? GTLRTexttospeech_SynthesizeSpeechResponse,
-                   let audioContent = response.audioContent,
-                   let speech = Data(base64Encoded: audioContent) {
-                    print("Speaking text GCP: \(text). \(speech)")
-                    self.audioPlayer = try AVAudioPlayer(data: speech)
-                    self.audioPlayer.delegate = self
-                    self.audioPlayer.play()
-                    GoogleCloudSynthesizer.saveCharactersProcessed(count: text.count, engine: self.selectedEngine!)
-                }
-            } catch {
-                print("Failed to speak using GCP: \(error).")
-                speakError = SynthesizerError.audioPlaybackError("Audio Playback Error: \(error.localizedDescription)")
+            if let err = err {
+                print("Failed to speak using GCP: \(err). \(ticket)")
+                speakError = err
+            }
+            
+            if let response = response as? GTLRTexttospeech_SynthesizeSpeechResponse,
+               let audioContent = response.audioContent,
+               let speech = Data(base64Encoded: audioContent) {
+                audioData = speech
+                GoogleCloudSynthesizer.saveCharactersProcessed(count: text.count, engine: self.selectedEngine!)
             }
         }
         if speakError != nil {
             throw SynthesizerError.synthesizerError("GCP Error: \(speakError.debugDescription)")
+        }
+        if audioData == nil {
+            throw SynthesizerError.synthesizerError("GCP Error: Couldn't generate audio data for \(text)")
+        } else {
+            return audioData!
+        }
+    }
+
+    func speak(text: String, data: Data) throws {
+        if selectedEngine == nil || selectedVoiceIdentifier == nil || selectedLanguageCode == nil {
+            throw SynthesizerError.userError("Need to select engine, language and/or voice in the reader settings.")
+        }
+        do {
+            self.audioPlayer = try AVAudioPlayer(data: data)
+            self.audioPlayer.delegate = self
+            self.audioPlayer.play()
+        } catch {
+            switch error {
+                case is SynthesizerError:
+                    throw error
+                default:
+                    throw SynthesizerError.synthesizerError("GCP Playback Error: \(error)")
+            }
         }
     }
 

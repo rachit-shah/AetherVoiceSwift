@@ -50,14 +50,14 @@ class MicrosoftAzureSynthesizer: NSObject, SpeechSynthesizerProtocol, AVAudioPla
         selectedVoiceIdentifier = voice
     }
     
-    func speak(text: String) throws {
+    func generateAudioData(text: String) async throws -> Data {
         if selectedEngine == nil || selectedVoiceIdentifier == nil || selectedLanguageCode == nil {
             throw SynthesizerError.userError("Need to select engine, language and/or voice in the reader settings.")
         }
         let url = URL(string: "\(azureTTSEndpoint)/cognitiveservices/v1")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.setValue("audio-24khz-160kbitrate-mono-mp3", forHTTPHeaderField: "X-Microsoft-OutputFormat")
+        request.setValue("audio-24khz-48kbitrate-mono-mp3", forHTTPHeaderField: "X-Microsoft-OutputFormat")
         request.setValue("application/ssml+xml", forHTTPHeaderField: "Content-Type")
         request.setValue("AetherVoice", forHTTPHeaderField: "User-Agent")
         request.setValue(azureSubscriptionKey, forHTTPHeaderField: "Ocp-Apim-Subscription-Key")
@@ -70,35 +70,27 @@ class MicrosoftAzureSynthesizer: NSObject, SpeechSynthesizerProtocol, AVAudioPla
             </speak>
         """
         request.httpBody = ssmlBody.data(using: .utf8)
-        var speakError: Error?
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                print("Error: \(error.localizedDescription)")
-                speakError = error
-                return
-            }
-            
-            guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
-                print("Server responded with an error")
-                return
-            }
-            
-            guard let data = data else {
-                print("No data received")
-                return
-            }
-            do {
-                print("Speaking text Azure: \(text). \(data)")
-                self.audioPlayer = try AVAudioPlayer(data: data)
-                self.audioPlayer.delegate = self
-                self.audioPlayer.play()
-                MicrosoftAzureSynthesizer.saveCharactersProcessed(count: text.count, engine: self.selectedEngine ?? "Neural")
-            } catch {
-                print("Failed to speak using Azure: \(error).")
-                speakError = SynthesizerError.audioPlaybackError("Audio Playback Error: \(error.localizedDescription)")
-            }
+        print("Generating audio Azure: \(text)")
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw SynthesizerError.synthesizerError("Azure Error: Couldn't generate audio data for \(text)") }
+        MicrosoftAzureSynthesizer.saveCharactersProcessed(count: text.count, engine: self.selectedEngine ?? "Neural")
+        return data
+    }
+    
+    func speak(text: String, data: Data) throws {
+        if selectedEngine == nil || selectedVoiceIdentifier == nil || selectedLanguageCode == nil {
+            throw SynthesizerError.userError("Need to select engine, language and/or voice in the reader settings.")
         }
-        task.resume()
+        var speakError: Error?
+        do {
+            self.audioPlayer = try AVAudioPlayer(data: data)
+            self.audioPlayer.delegate = self
+            self.audioPlayer.play()
+        } catch {
+            print("Failed to speak using Azure: \(error).")
+            speakError = SynthesizerError.audioPlaybackError("Audio Playback Error: \(error.localizedDescription)")
+        }
+        
         if speakError != nil {
             throw SynthesizerError.synthesizerError("Azure Error: \(speakError.debugDescription)")
         }

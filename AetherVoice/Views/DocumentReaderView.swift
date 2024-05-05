@@ -1,6 +1,5 @@
 import SwiftUI
-
-
+import MediaPlayer
 
 struct DocumentReaderView: View {
     @StateObject var viewModel: DocumentReaderViewModel
@@ -111,6 +110,9 @@ struct DocumentReaderView: View {
         }
         #endif
         .navigationTitle(viewModel.document.title)
+        .onAppear {
+            setupRemoteCommands()
+        }
         .onDisappear {
             viewModel.stopReadingText()
         }
@@ -126,6 +128,41 @@ struct DocumentReaderView: View {
         Button(action: { showingSettings = true }) {
             Image(systemName: "gear")
         }
+    }
+    
+    private func setupRemoteCommands() {
+        let remoteCommandCenter = MPRemoteCommandCenter.shared()
+
+        remoteCommandCenter.playCommand.addTarget { [self] event in
+            self.viewModel.toggleSpeech()
+            return .success
+        }
+
+        remoteCommandCenter.pauseCommand.addTarget { [self] event in
+            self.viewModel.toggleSpeech()
+            return .success
+        }
+
+        remoteCommandCenter.skipBackwardCommand.preferredIntervals = [15] // Skip backward by 15 seconds
+        remoteCommandCenter.skipBackwardCommand.addTarget { [self] event in
+            self.viewModel.moveToPreviousSentence()
+            return .success
+        }
+
+        remoteCommandCenter.skipForwardCommand.preferredIntervals = [15] // Skip forward by 15 seconds
+        remoteCommandCenter.skipForwardCommand.addTarget { [self] event in
+            self.viewModel.moveToNextSentence()
+            return .success
+        }
+
+        // Update now playing info
+        updateNowPlayingInfo(title: viewModel.document.title)
+    }
+
+    private func updateNowPlayingInfo(title: String) {
+        var nowPlayingInfo = [String: Any]()
+        nowPlayingInfo[MPMediaItemPropertyTitle] = title
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
 }
 

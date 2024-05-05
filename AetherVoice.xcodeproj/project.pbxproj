@@ -76,6 +76,7 @@
 		607284062B3AE68A002B5DAF /* MicrosoftAzureSynthesizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MicrosoftAzureSynthesizer.swift; sourceTree = "<group>"; };
 		607284072B3AE68A002B5DAF /* AmazonPollySynthesizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonPollySynthesizer.swift; sourceTree = "<group>"; };
 		60CAE3772BE7848F00B1E884 /* DocumentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentData.swift; sourceTree = "<group>"; };
+		60CAE3792BE7E85D00B1E884 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		60DFF5E32B3EB44C004E098C /* AmazonPollyCFN.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = AmazonPollyCFN.yaml; sourceTree = "<group>"; };
 		60DFF5E62B3EECB7004E098C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		60DFF5E82B3EF375004E098C /* KeychainWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
@@ -119,6 +120,7 @@
 		607283C62B3875D7002B5DAF /* AetherVoice */ = {
 			isa = PBXGroup;
 			children = (
+				60CAE3792BE7E85D00B1E884 /* Info.plist */,
 				60DFF5E22B3EB414004E098C /* Dist */,
 				607283FC2B3A0CE8002B5DAF /* Utilities */,
 				607283E92B39BE90002B5DAF /* CoreData */,
@@ -467,6 +469,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AetherVoice/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AetherVoice;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -509,6 +512,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AetherVoice/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AetherVoice;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;

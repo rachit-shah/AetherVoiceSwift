@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6036DBE82BF95CFD00A42D1A /* Readability in Frameworks */ = {isa = PBXBuildFile; productRef = 6036DBE72BF95CFD00A42D1A /* Readability */; };
 		6040521C2B40414E00100DC5 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 6040521B2B40414E00100DC5 /* README.md */; };
 		604052202B405DC700100DC5 /* AWSSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6040521F2B405DC700100DC5 /* AWSSettingsView.swift */; };
 		604052222B405DF200100DC5 /* GCPSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604052212B405DF200100DC5 /* GCPSettingsView.swift */; };
@@ -18,6 +19,7 @@
 		604A91482B3CB36200836DAF /* RuntimeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604A91472B3CB36200836DAF /* RuntimeError.swift */; };
 		605FC1B52BE72C030086987A /* AzureSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605FC1B42BE72C030086987A /* AzureSettingsView.swift */; };
 		605FC1B72BE73D890086987A /* AzureVoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605FC1B62BE73D890086987A /* AzureVoice.swift */; };
+		606D3B9D2BF943680047994C /* URLInputSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D3B9C2BF943680047994C /* URLInputSheet.swift */; };
 		607283C82B3875D7002B5DAF /* AetherVoiceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607283C72B3875D7002B5DAF /* AetherVoiceApp.swift */; };
 		607283CA2B3875D7002B5DAF /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607283C92B3875D7002B5DAF /* Persistence.swift */; };
 		607283CD2B3875D7002B5DAF /* AetherVoice.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 607283CB2B3875D7002B5DAF /* AetherVoice.xcdatamodeld */; };
@@ -54,6 +56,7 @@
 		604A91472B3CB36200836DAF /* RuntimeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeError.swift; sourceTree = "<group>"; };
 		605FC1B42BE72C030086987A /* AzureSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureSettingsView.swift; sourceTree = "<group>"; };
 		605FC1B62BE73D890086987A /* AzureVoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureVoice.swift; sourceTree = "<group>"; };
+		606D3B9C2BF943680047994C /* URLInputSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLInputSheet.swift; sourceTree = "<group>"; };
 		607283C42B3875D7002B5DAF /* AetherVoice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AetherVoice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607283C72B3875D7002B5DAF /* AetherVoiceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AetherVoiceApp.swift; sourceTree = "<group>"; };
 		607283C92B3875D7002B5DAF /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -92,6 +95,7 @@
 				604A8F322B3C563F00836DAF /* AWSCognitoIdentity in Frameworks */,
 				604052A82B40892B00100DC5 /* GoogleAPIClientForREST_Texttospeech in Frameworks */,
 				607283E42B39B2A5002B5DAF /* UniformTypeIdentifiers.framework in Frameworks */,
+				6036DBE82BF95CFD00A42D1A /* Readability in Frameworks */,
 				604052AE2B42EF8400100DC5 /* AppKit.framework in Frameworks */,
 				604A90842B3C564700836DAF /* AWSPolly in Frameworks */,
 				607283E02B39B074002B5DAF /* MobileCoreServices.framework in Frameworks */,
@@ -101,6 +105,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		606D3B9B2BF943540047994C /* Sheets */ = {
+			isa = PBXGroup;
+			children = (
+				606D3B9C2BF943680047994C /* URLInputSheet.swift */,
+			);
+			path = Sheets;
+			sourceTree = "<group>";
+		};
 		607283BB2B3875D7002B5DAF = {
 			isa = PBXGroup;
 			children = (
@@ -127,6 +139,7 @@
 				607283FC2B3A0CE8002B5DAF /* Utilities */,
 				607283E92B39BE90002B5DAF /* CoreData */,
 				607283E82B39BE8C002B5DAF /* Services */,
+				606D3B9B2BF943540047994C /* Sheets */,
 				607283E72B39BE84002B5DAF /* ViewModels */,
 				607283E62B39BE76002B5DAF /* Views */,
 				607283E52B39BE67002B5DAF /* Models */,
@@ -251,6 +264,7 @@
 				604A8F312B3C563F00836DAF /* AWSCognitoIdentity */,
 				604A90832B3C564700836DAF /* AWSPolly */,
 				604052A72B40892B00100DC5 /* GoogleAPIClientForREST_Texttospeech */,
+				6036DBE72BF95CFD00A42D1A /* Readability */,
 			);
 			productName = CloudReader;
 			productReference = 607283C42B3875D7002B5DAF /* AetherVoice.app */;
@@ -284,6 +298,9 @@
 				604A8E922B3C563D00836DAF /* XCRemoteSwiftPackageReference "aws-sdk-swift" */,
 				604052232B4085DF00100DC5 /* XCRemoteSwiftPackageReference "google-api-swift-client" */,
 				604052282B4088AF00100DC5 /* XCRemoteSwiftPackageReference "google-api-objectivec-client-for-rest" */,
+				6036DBE02BF9552600A42D1A /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+				6036DBE32BF958BC00A42D1A /* XCRemoteSwiftPackageReference "ReadabilityKit" */,
+				6036DBE62BF95CFD00A42D1A /* XCRemoteSwiftPackageReference "read-swift" */,
 			);
 			productRefGroup = 607283C52B3875D7002B5DAF /* Products */;
 			projectDirPath = "";
@@ -316,6 +333,7 @@
 			files = (
 				607283EF2B39BEDE002B5DAF /* DocumentReaderView.swift in Sources */,
 				604052AA2B42DFB400100DC5 /* SplashView.swift in Sources */,
+				606D3B9D2BF943680047994C /* URLInputSheet.swift in Sources */,
 				6072840A2B3AE68A002B5DAF /* AmazonPollySynthesizer.swift in Sources */,
 				607283C82B3875D7002B5DAF /* AetherVoiceApp.swift in Sources */,
 				60DFF5E92B3EF375004E098C /* KeychainWrapper.swift in Sources */,
@@ -577,6 +595,30 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		6036DBE02BF9552600A42D1A /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scinfu/SwiftSoup.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.7.2;
+			};
+		};
+		6036DBE32BF958BC00A42D1A /* XCRemoteSwiftPackageReference "ReadabilityKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/exyte/ReadabilityKit.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		6036DBE62BF95CFD00A42D1A /* XCRemoteSwiftPackageReference "read-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ttscoff/read-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		604052232B4085DF00100DC5 /* XCRemoteSwiftPackageReference "google-api-swift-client" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/googleapis/google-api-swift-client.git";
@@ -604,6 +646,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		6036DBE72BF95CFD00A42D1A /* Readability */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6036DBE62BF95CFD00A42D1A /* XCRemoteSwiftPackageReference "read-swift" */;
+			productName = Readability;
+		};
 		604052A72B40892B00100DC5 /* GoogleAPIClientForREST_Texttospeech */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 604052282B4088AF00100DC5 /* XCRemoteSwiftPackageReference "google-api-objectivec-client-for-rest" */;

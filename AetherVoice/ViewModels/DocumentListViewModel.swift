@@ -1,9 +1,10 @@
 import Combine
 import Foundation
 import PDFKit
+import Readability
 import UniformTypeIdentifiers
 
-class DocumentListViewModel: ObservableObject {
+@MainActor class DocumentListViewModel: ObservableObject {
     @Published var documents: [AppDocument] = []
     var synthesizerDict: [TTSService: SpeechSynthesizerProtocol] = [TTSService: SpeechSynthesizerProtocol]()
     private let persistenceController = PersistenceController.shared
@@ -16,6 +17,18 @@ class DocumentListViewModel: ObservableObject {
     func saveDocument(_ appDocument: AppDocument) {
         persistenceController.saveDocument(appDocument)
         fetchDocuments()  // Refresh the documents list
+    }
+    
+    func deleteDocument(_ document: AppDocument) {
+        persistenceController.deleteDocument(document)
+        fetchDocuments() // Refresh the document list after deletion
+    }
+    
+    func deleteDocuments(at offsets: IndexSet) {
+        for index in offsets {
+            let document = documents[index]
+            deleteDocument(document)
+        }
     }
 
     func fetchDocuments() {
@@ -103,6 +116,44 @@ class DocumentListViewModel: ObservableObject {
             default:
                 print("Unsupported file type")
         }
+    }
+    
+    func fetchContent(at urlString: String) {
+        print("URL: \(urlString)")
+        guard let url = URL(string: urlString) else {
+            print("Invalid url \(urlString)")
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                // Handle error
+                print("Error fetching content: \(error)")
+                return
+            }
+            
+            guard let data = data, let html = String(data: data, encoding: .utf8) else {
+                print("No data returned from url \(urlString)")
+                return
+            }
+            
+            do {
+                // Parse the webpage content
+                let readability = Readability(html: html)
+                let started = readability.start()
+                if started {
+                    let title = try readability.articleTitle?.text()
+                    let data = try readability.articleContent?.text()
+                    if (title != nil && data != nil) {
+                        let newDocument = AppDocument(title: title!, content: data!)
+                        self.saveDocument(newDocument)
+                    }
+                }
+            } catch {
+                print("Error parsing html \(html)")
+            }
+        }
+        task.resume()
     }
 
     func processPlainTextDocument(at url: URL) {

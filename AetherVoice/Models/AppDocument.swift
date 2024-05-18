@@ -1,6 +1,6 @@
 import Foundation
 
-struct AppDocument: Identifiable {
+struct AppDocument: Hashable, Identifiable {
     var id: UUID
     var title: String
     var content: String

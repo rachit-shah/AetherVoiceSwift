@@ -46,6 +46,22 @@ class PersistenceController {
             print("Failed to save document: \(error)")
         }
     }
+    
+    func deleteDocument(_ appDocument: AppDocument) {
+        let fetchRequest: NSFetchRequest<Document> = Document.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", appDocument.id as CVarArg)
+
+        do {
+            let documentEntities = try container.viewContext.fetch(fetchRequest)
+            for document in documentEntities {
+                container.viewContext.delete(document)
+            }
+            try container.viewContext.save()
+        } catch {
+            // Handle the error appropriately
+            print("Failed to delete document: \(error)")
+        }
+    }
 
     func fetchDocuments() -> [AppDocument] {
         let fetchRequest: NSFetchRequest<Document> = Document.fetchRequest()

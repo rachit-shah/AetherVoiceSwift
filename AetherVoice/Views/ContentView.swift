@@ -3,6 +3,7 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var viewModel: DocumentListViewModel
     @State private var showingSettings = false
+    @State private var showingURLInputSheet = false
     #if os(iOS)
     @State private var showingActionSheet = false
     @State private var showingDocumentPicker = false
@@ -25,6 +26,9 @@ struct ContentView: View {
                 #elseif os(macOS)
                 .toolbar {
                     ToolbarItemGroup(placement: .automatic) {
+                        Spacer()
+                    }
+                    ToolbarItemGroup(placement: .automatic) {
                         Button(action: {
                             self.showingSettings.toggle()
                         }) {
@@ -36,6 +40,13 @@ struct ContentView: View {
                                 .padding()
                         }
                         addButtonmacOS
+                        .popover(isPresented: $showingURLInputSheet) {
+                            URLInputSheet(isPresented: $showingURLInputSheet) { urlStrings in
+                                urlStrings.forEach { urlString in
+                                    viewModel.fetchContent(at: urlString)
+                                }
+                            }
+                        }
                     }
                 }
                 #endif
@@ -61,16 +72,23 @@ struct ContentView: View {
                     showingDocumentPicker = true
                 },
                 .default(Text("Link a Webpage")) {
-                    // Implement webpage linking functionality
+                    showingURLInputSheet = true
                 },
                 .cancel()
             ])
         }
         .sheet(isPresented: $showingDocumentPicker) {
             DocumentPicker(allowedContentTypes: [.plainText, .pdf, .epub]) { urls in
-                urls?.forEach { url in
+                urls.forEach { url in
                     // Handle the picked document URL
                     viewModel.processDocument(at: url)
+                }
+            }
+        }
+        .sheet(isPresented: $showingURLInputSheet) {
+            URLInputSheet(isPresented: $showingURLInputSheet) { urlStrings in
+                urlStrings.forEach { urlString in
+                    viewModel.fetchContent(at: urlString)
                 }
             }
         }
@@ -84,15 +102,9 @@ struct ContentView: View {
                 viewModel.uploadDocument()
             }
             Button("Link a Webpage") {
-                // Implement webpage linking functionality
+                showingURLInputSheet = true
             }
         }
-    }
-    #endif
-    
-    #if os(iOS)
-    func uploadDocument() {
-        showingDocumentPicker = true
     }
     #endif
 }

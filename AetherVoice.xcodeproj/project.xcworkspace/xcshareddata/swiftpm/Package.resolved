@@ -1,4 +1,5 @@
 {
+  "originHash" : "e1480913fee0377ac9ce9e98475affed68b16b8984e458867e554ba3f77d28e0",
   "pins" : [
     {
       "identity" : "aws-crt-swift",
@@ -73,6 +74,33 @@
       }
     },
     {
+      "identity" : "ji",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/honghaoz/Ji",
+      "state" : {
+        "revision" : "a37a310cc6aaf999de4bee953a9680bf9b629200",
+        "version" : "5.1.0"
+      }
+    },
+    {
+      "identity" : "read-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ttscoff/read-swift.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "55db904566502acac7fbe3fd9fe4c7f416a49afe"
+      }
+    },
+    {
+      "identity" : "readabilitykit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/exyte/ReadabilityKit.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "bab3bf8f62f08af2bfc78e0c4f7c9e6c6ef51a11"
+      }
+    },
+    {
       "identity" : "smithy-swift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/smithy-lang/smithy-swift",
@@ -118,6 +146,15 @@
       }
     },
     {
+      "identity" : "swiftsoup",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/scinfu/SwiftSoup.git",
+      "state" : {
+        "revision" : "028487d4a8a291b2fe1b4392b5425b6172056148",
+        "version" : "2.7.2"
+      }
+    },
+    {
       "identity" : "xmlcoder",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/MaxDesiatov/XMLCoder.git",
@@ -127,5 +164,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

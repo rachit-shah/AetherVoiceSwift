@@ -82,11 +82,11 @@ class DocumentListViewModel: ObservableObject {
     
     #if os(macOS)
     func uploadDocument() {
-        FilePickerUtility.openFilePicker { url in
-            guard let url = url else { return }
-
-            // Call processDocument to handle the file
-            self.processDocument(at: url)
+        FilePickerUtility.openFilePicker { urls in
+            urls?.forEach { url in
+                // Call processDocument to handle the file
+                self.processDocument(at: url)
+            }
         }
     }
     #endif

@@ -4,11 +4,11 @@ import UniformTypeIdentifiers
 #if os(iOS)
 struct DocumentPicker: UIViewControllerRepresentable {
     var allowedContentTypes: [UTType]
-    var onPick: (URL) -> Void
+    var onPick: ([URL]) -> Void
 
     func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
         let picker = UIDocumentPickerViewController(forOpeningContentTypes: allowedContentTypes, asCopy: true)
-        picker.allowsMultipleSelection = false
+        picker.allowsMultipleSelection = true
         picker.delegate = context.coordinator
         return picker
     }
@@ -27,8 +27,7 @@ struct DocumentPicker: UIViewControllerRepresentable {
         }
 
         func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-            guard let url = urls.first else { return }
-            parent.onPick(url)
+            parent.onPick(urls)
         }
     }
 }

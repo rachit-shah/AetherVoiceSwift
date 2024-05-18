@@ -67,9 +67,11 @@ struct ContentView: View {
             ])
         }
         .sheet(isPresented: $showingDocumentPicker) {
-            DocumentPicker(allowedContentTypes: [.plainText, .pdf, .epub]) { url in
-                // Handle the picked document URL
-                viewModel.processDocument(at: url)
+            DocumentPicker(allowedContentTypes: [.plainText, .pdf, .epub]) { urls in
+                urls?.forEach { url in
+                    // Handle the picked document URL
+                    viewModel.processDocument(at: url)
+                }
             }
         }
     }

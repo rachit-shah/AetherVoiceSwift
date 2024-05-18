@@ -5,15 +5,15 @@ import AppKit
 
 class FilePickerUtility {
     #if os(macOS)
-    static func openFilePicker(completion: @escaping (URL?) -> Void) {
+    static func openFilePicker(completion: @escaping ([URL]?) -> Void) {
         let panel = NSOpenPanel()
-        panel.allowsMultipleSelection = false
+        panel.allowsMultipleSelection = true
         panel.canChooseDirectories = false
         panel.canChooseFiles = true
         panel.allowedContentTypes = [.plainText, .pdf, .epub]
 
         if panel.runModal() == .OK {
-            completion(panel.url)
+            completion(panel.urls)
         } else {
             completion(nil)
         }

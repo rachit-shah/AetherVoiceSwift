@@ -6,6 +6,13 @@ import UniformTypeIdentifiers
 
 @MainActor class DocumentListViewModel: ObservableObject {
     @Published var documents: [AppDocument] = []
+    @Published var sortOrder: SortOrder = .name
+    
+    enum SortOrder {
+        case name
+        case date
+    }
+    
     var synthesizerDict: [TTSService: SpeechSynthesizerProtocol] = [TTSService: SpeechSynthesizerProtocol]()
     private let persistenceController = PersistenceController.shared
 
@@ -33,6 +40,16 @@ import UniformTypeIdentifiers
 
     func fetchDocuments() {
         documents = persistenceController.fetchDocuments()
+        sortDocuments()
+    }
+    
+    func sortDocuments() {
+        switch sortOrder {
+            case .name:
+                documents.sort { $0.title < $1.title }
+            case .date:
+                documents.sort { $0.dateAdded < $1.dateAdded }
+        }
     }
     
     func initializeAllSynthesizers() async {
